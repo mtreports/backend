@@ -134,11 +134,11 @@ app.use((err, req, res, next) => {
 app.use("/*", 
 shopify.validateAuthenticatedSession(),
 async (_req, res, _next) => {
-  const shop = res.locals.shopify.session.shop;
-  const accesstoken = res.locals.shopify.session.accessToken;
-  console.log(_req);
-  res.send("App works properly!");
-  //  return res.redirect(301, "http://localhost:4000");
+  // const shop = res.locals.shopify.session.shop;
+  // const accesstoken = res.locals.shopify.session.accessToken;
+  // console.log(_req);
+  // res.send("App works properly!");
+   return res.redirect(301, "http://3.6.228.94:4000");
 }
 );
 
