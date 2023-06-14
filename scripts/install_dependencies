@@ -12,7 +12,7 @@ pm2 stop all
 cd /home/ec2-user/dashtar-backend
 npm install
 pm2 start npm --name "backend" -- run dev
-pm2 serve /home/ec2-user/build 3000 --spa
+pm2 serve /home/ec2-user/build 4000 --spa
 echo Successfully connected
 
 
