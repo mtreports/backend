@@ -24,7 +24,7 @@ connectDB();
 const app = express();
 app.use(cors());
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5055;
 
 
 app.get(shopify.config.auth.path, shopify.auth.begin());
