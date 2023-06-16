@@ -1,11 +1,11 @@
 const {shopifyApp} = require('@shopify/shopify-app-express');
-const {LogSeverity, LATEST_API_VERSION} = require('@shopify/shopify-api');
+const {LATEST_API_VERSION} = require('@shopify/shopify-api');
 const {restResources} = require('@shopify/shopify-api/rest/admin/2023-04');
 const { SQLiteSessionStorage } = require("@shopify/shopify-app-session-storage-sqlite");
 
 
 const PORT = process.env.PORT || 5055;
-const DB_PATH = `${process.cwd()}/api/database.sqlite`;
+const DB_PATH = `${process.cwd()}/api/d/database.sqlite`;
 const shopify = shopifyApp({
   api: {
     apiKey: '8e265ab334a071389918ac8cd3e58164',
@@ -16,9 +16,6 @@ const shopify = shopifyApp({
     restResources,
     hostScheme: 'http',
     hostName: `3.6.228.94:5055`,
-    logger: {
-      level: LogSeverity.Debug,
-    },
   },
   auth: {
     path: '/api/auth',
