@@ -1,5 +1,5 @@
 const Currencie= require('../models/Currency');
-const { mongo_connection } = require('../api/config/db'); // CCDev
+const { mongo_connection } = require('../config/db'); // CCDev
 
 const addCurrency = async (req, res) => {
   try {
