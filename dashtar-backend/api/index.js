@@ -1,4 +1,3 @@
-require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -19,6 +18,7 @@ const { isAuth, isAdmin } = require("../config/auth");
 const {GDPRWebhookHandlers} = require('./gdpr.js');
 const shopify = require("./shopify.js");
 const getProducts = require("./getproduct.js");
+require("dotenv").config();
 
 connectDB();
 const app = express();
