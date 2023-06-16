@@ -3,7 +3,7 @@ const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
 const path = require('path');
-const { connectDB } = require("../config/db");
+const { connectDB } = require("./config/db");
 const productRoutes = require("../routes/productRoutes");
 const customerRoutes = require("../routes/customerRoutes");
 const adminRoutes = require("../routes/adminRoutes");
@@ -15,7 +15,7 @@ const attributeRoutes = require("../routes/attributeRoutes");
 const settingRoutes = require("../routes/settingRoutes");
 const currencyRoutes = require("../routes/currencyRoutes");
 const languageRoutes = require("../routes/languageRoutes");
-const { isAuth, isAdmin } = require("../config/auth");
+const { isAuth, isAdmin } = require("./config/auth");
 const {GDPRWebhookHandlers} = require('./gdpr.js');
 const shopify = require("./shopify.js");
 const getProducts = require("./getproduct.js");
@@ -128,8 +128,6 @@ app.use((err, req, res, next) => {
   if (res.headersSent) return next(err);
   res.status(400).json({ message: err.message });
 });
-
-app.use(shopify.cspHeaders());
 
 
 // app.listen(PORT, () => console.log(`server running on port ${PORT}`));

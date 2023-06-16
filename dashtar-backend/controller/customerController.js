@@ -2,7 +2,7 @@ require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Customer = require("../models/Customer");
-const { signInToken, tokenForVerify } = require("../config/auth");
+const { signInToken, tokenForVerify } = require("../api/config/auth");
 const { sendEmail } = require("../lib/email-sender/sender");
 const {
   customerRegisterBody,

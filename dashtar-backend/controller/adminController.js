@@ -3,7 +3,7 @@ const dayjs = require("dayjs");
 const utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
 const jwt = require("jsonwebtoken");
-const { signInToken, tokenForVerify, sendEmail } = require("../config/auth");
+const { signInToken, tokenForVerify, sendEmail } = require("../api/config/auth");
 const Admin = require("../models/Admin");
 
 const registerAdmin = async (req, res) => {
