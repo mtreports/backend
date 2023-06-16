@@ -129,6 +129,8 @@ app.use((err, req, res, next) => {
   res.status(400).json({ message: err.message });
 });
 
+app.use(shopify.cspHeaders());
+
 
 // app.listen(PORT, () => console.log(`server running on port ${PORT}`));
 app.use("/*", 

@@ -5,15 +5,17 @@ const { SQLiteSessionStorage } = require("@shopify/shopify-app-session-storage-s
 
 
 const PORT = process.env.PORT || 5055;
-const DB_PATH = `${process.cwd()}/api/database.sqlite`;
+const DB_PATH = `${process.cwd()}/api/d/database.sqlite`;
 const shopify = shopifyApp({
   api: {
     apiKey: '8e265ab334a071389918ac8cd3e58164',
     apiSecretKey: '401ba2a667897f6a263032696a3f6268',
     scopes: ['read_products'],
-    isEmbeddedApp: false,
+    isEmbeddedApp: false, 
     apiVersion: LATEST_API_VERSION,
     restResources,
+    hostScheme: 'http',
+    hostName: `3.6.228.94:5055`,
   },
   auth: {
     path: '/api/auth',
