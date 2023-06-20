@@ -10,12 +10,9 @@ hooks:
     - location: scripts/install_dependencies
       timeout: 300
       runas: root
-<<<<<<< HEAD
     - location: scripts/start_server
       timeout: 300
       runas: root
-=======
->>>>>>> connect/master
 
   AfterInstall:
     - location: scripts/new_script
@@ -26,8 +23,4 @@ hooks:
     - location: scripts/stop_server
       timeout: 300
       runas: root
-<<<<<<< HEAD
 
-=======
-      
->>>>>>> connect/master
