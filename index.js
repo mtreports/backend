@@ -9,7 +9,7 @@ const { SQLiteSessionStorage } = require("@shopify/shopify-app-session-storage-s
 const app = express();
 app.use(cors());
 
-const PORT = 4000;
+const PORT = 443;
 const DB_PATH = `${process.cwd()}/database.sqlite`;
 const shopify = shopifyApp({
   api: {
