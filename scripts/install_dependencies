@@ -9,10 +9,10 @@ npm install -g npm@9.6.7
 npm install -g serve
 npm install pm2 -g
 pm2 stop all
-cd /var/www/html/dashtar-backend
+cd /home/ec2-user/dashtar-backend
 npm install
 pm2 start npm --name "backend" -- run dev
-pm2 serve /var/www/html/build 443 --spa
+pm2 serve /home/ec2-user/build 4000 --spa
 echo Successfully connected
 
 
