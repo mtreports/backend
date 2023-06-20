@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 require("dotenv").config();
+=======
+>>>>>>> connect/master
 const express = require("express");
 const cors = require("cors");
 const helmet = require("helmet");
@@ -19,6 +22,10 @@ const { isAuth, isAdmin } = require("../config/auth");
 const {GDPRWebhookHandlers} = require('./gdpr.js');
 const shopify = require("./shopify.js");
 const getProducts = require("./getproduct.js");
+<<<<<<< HEAD
+=======
+require("dotenv").config();
+>>>>>>> connect/master
 
 connectDB();
 const app = express();
@@ -134,11 +141,19 @@ app.use((err, req, res, next) => {
 app.use("/*", 
 shopify.validateAuthenticatedSession(),
 async (_req, res, _next) => {
+<<<<<<< HEAD
   const shop = res.locals.shopify.session.shop;
   const accesstoken = res.locals.shopify.session.accessToken;
   console.log(_req);
   res.send("App works properly!");
   //  return res.redirect(301, "http://localhost:4000");
+=======
+  // const shop = res.locals.shopify.session.shop;
+  // const accesstoken = res.locals.shopify.session.accessToken;
+  // console.log(_req);
+  // res.send("App works properly!");
+   return res.redirect(301, "http://3.6.228.94:4000");
+>>>>>>> connect/master
 }
 );
 

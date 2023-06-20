@@ -5,7 +5,11 @@ const { SQLiteSessionStorage } = require("@shopify/shopify-app-session-storage-s
 
 
 const PORT = process.env.PORT || 5055;
+<<<<<<< HEAD
 const DB_PATH = `${process.cwd()}/database.sqlite`;
+=======
+const DB_PATH = `${process.cwd()}/api/database.sqlite`;
+>>>>>>> connect/master
 const shopify = shopifyApp({
   api: {
     apiKey: '8e265ab334a071389918ac8cd3e58164',
