@@ -2,9 +2,9 @@ version: 0.0
 os: linux
 files:
   - source: build
-    destination: /var/www/html/build
+    destination: /home/ec2-user/build
   - source: dashtar-backend
-    destination: /var/www/html/dashtar-backend
+    destination: /home/ec2-user/dashtar-backend
 hooks:
   BeforeInstall:
     - location: scripts/install_dependencies
