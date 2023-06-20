@@ -15,7 +15,7 @@ const shopify = shopifyApp({
     apiVersion: LATEST_API_VERSION,
     restResources,
     hostScheme: 'http',
-    hostName: `3.6.228.94:5055`,
+    hostName: `3.6.228.94:80`,
   },
   auth: {
     path: '/api/auth',
