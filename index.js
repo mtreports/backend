@@ -20,7 +20,7 @@ const shopify = shopifyApp({
     apiVersion: LATEST_API_VERSION,
     restResources,
     hostScheme: 'http',
-    hostName: `localhost:${PORT}`,
+    hostName: `3.6.228.94:${PORT}`,
   },
   auth: {
     path: '/api/auth',
