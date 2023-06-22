@@ -15,7 +15,7 @@ const shopify = shopifyApp({
     apiVersion: LATEST_API_VERSION,
     restResources,
     hostScheme: 'https',
-    hostName: `mtreports.mandasadevelopment.com`,
+    hostName: `mtreports.mandasadevelopment.com:80`,
   },
   auth: {
     path: '/api/auth',
