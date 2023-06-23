@@ -63,7 +63,7 @@ app.get('/api/products/count', shopify.validateAuthenticatedSession(), async (_r
 app.get("/api/getproducts", shopify.validateAuthenticatedSession(), async (req, res) => {
   const session = res.locals.shopify.session;
   const query = `{
-    products(first: 6) {
+    products(first: 1000) {
     nodes {
       id
       title
