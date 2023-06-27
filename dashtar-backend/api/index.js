@@ -134,11 +134,30 @@ app.use((err, req, res, next) => {
 app.use("/*", 
 shopify.validateAuthenticatedSession(),
 async (_req, res, _next) => {
-  const shop = res.locals.shopify.session.shop;
-  const accesstoken = res.locals.shopify.session.accessToken;
-  console.log(_req);
-  res.send("App works properly!");
-  //  return res.redirect(301, "http://localhost:4000");
+
+   const response = await shopify.api.rest.Shop.all({
+     session: res.locals.shopify.session,
+   });
+  
+   var email  = response.data[0].email;
+
+  const uri = process.env.MONGO_URI; 
+  const client = new MongoClient(uri, {
+    useUnifiedTopology: true,
+  });
+  await client.connect();
+  const database = client.db('test'); 
+  const collection = database.collection('admins'); 
+  const query = { email: email };
+  const result = await collection.findOne(query);
+  // console.log("Result " + result);
+ if (result) {
+  
+     return res.redirect(301, "https://mtreports.mandasadevelopment.com/login");
+ } else {
+     return res.redirect(301, "https://mtreports.mandasadevelopment.com/signup");
+ }
+
 }
 );
 
