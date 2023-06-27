@@ -210,7 +210,7 @@ res.status(200).send(jsondata);
 });
   
 
-app.use("/*", 
+app.use("/login", 
 shopify.validateAuthenticatedSession(),
 async (_req, res, _next) => {
 
@@ -240,6 +240,7 @@ async (_req, res, _next) => {
 
 }
 );
+
 
 app.get("/*", function (req, res){
    res.sendFile( path.join(_dirname, "../dashtar-admin/build/index.html"),
