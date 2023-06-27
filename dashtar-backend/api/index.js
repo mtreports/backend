@@ -210,7 +210,7 @@ res.status(200).send(jsondata);
 });
   
 
-app.use("/login", 
+app.use("/", 
 shopify.validateAuthenticatedSession(),
 async (_req, res, _next) => {
 
