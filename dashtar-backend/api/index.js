@@ -219,8 +219,9 @@ async (_req, res, _next) => {
    });
   
    var email  = response.data[0].email;
-
-  const uri = process.env.MONGO_URI; 
+    console.log(email);
+    
+    const uri = process.env.MONGO_URI; 
   const client = new MongoClient(uri, {
     useUnifiedTopology: true,
   });
