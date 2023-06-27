@@ -67,7 +67,7 @@ app.get("/api/getproducts", shopify.validateAuthenticatedSession(), async (req, 
     nodes {
       id
       title
-      variants(first: 100) {
+      variants(first: 1) {
         nodes {
           id
           price
@@ -79,7 +79,7 @@ app.get("/api/getproducts", shopify.validateAuthenticatedSession(), async (req, 
           url
         }
       }
-      options(first: 10) {
+      options(first: 3) {
         name
         values
       }
@@ -137,8 +137,8 @@ async (_req, res, _next) => {
   const shop = res.locals.shopify.session.shop;
   const accesstoken = res.locals.shopify.session.accessToken;
   console.log(_req);
-  res.send("App works properly!");
-  //  return res.redirect(301, "http://localhost:4000");
+  // res.send("App works properly!");
+   return res.redirect(301, "https://mtreports.mandasadevelopment.com");
 }
 );
 
