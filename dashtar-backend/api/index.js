@@ -4,7 +4,7 @@ const Cookies = require("js-cookie");
 const cors = require("cors");
 const { MongoClient } = require('mongodb');
 const axios = require('axios');
-const fetch  = require('node-fetch'); 
+const fetch = require('node-fetch');
 const helmet = require("helmet");
 const path = require('path');
 const shopify = require("./shopify.js");
@@ -21,7 +21,7 @@ const settingRoutes = require("../routes/settingRoutes");
 const currencyRoutes = require("../routes/currencyRoutes");
 const languageRoutes = require("../routes/languageRoutes");
 const { isAuth, isAdmin } = require("../config/auth");
-const {GDPRWebhookHandlers} = require('./gdpr.js');
+const { GDPRWebhookHandlers } = require('./gdpr.js');
 const getProducts = require("./getproduct.js");
 require("dotenv").config();
 
@@ -56,25 +56,25 @@ app.use("/api/shopify/*", shopify.validateAuthenticatedSession());
 
 
 app.get('/api/shopify/products/count', async (_req, res) => {
-//  console.log(res.locals.shopify.session);
+  //  console.log(res.locals.shopify.session);
   var countData = await shopify.api.rest.Product.count({
-  session: res.locals.shopify.session,
+    session: res.locals.shopify.session,
   });
 
   res.status(200).send(countData);
-  });
+});
 
 app.get("/api/shopify/getproducts", async (req, res) => {
   const session = res.locals.shopify.session;
 
-let first20products = [];
-let pageInfo;
-let endCursor = "";
-let counter = 1;
-let condition;
-let query1;
+  let first20products = [];
+  let pageInfo;
+  let endCursor = "";
+  let counter = 1;
+  let condition;
+  let query1;
 
-query1 =  `mutation {
+  query1 = `mutation {
   bulkOperationRunQuery(
    query: """
     {
@@ -101,12 +101,12 @@ query1 =  `mutation {
 }`;
 
 
-const response =  await getProducts(session, query1);
-const bulkOperationid = response.body.data.bulkOperationRunQuery.bulkOperation.id;
-let databulk = "";
-try {
-     
-  let query2 = `query {
+  const response = await getProducts(session, query1);
+  const bulkOperationid = response.body.data.bulkOperationRunQuery.bulkOperation.id;
+  let databulk = "";
+  try {
+
+    let query2 = `query {
     node(id: "${bulkOperationid}") {
       ... on BulkOperation {
         id
@@ -121,24 +121,24 @@ try {
     }
   }`;
 
-const response =  await getProducts(session, query2);
-databulk = response.body;
+    const response = await getProducts(session, query2);
+    databulk = response.body;
 
-} 
-catch (error) {
-  console.error('Error fetching bulk operation data:', error);
-}
- 
-// console.log(databulk);
-res.status(200).send(databulk);
+  }
+  catch (error) {
+    console.error('Error fetching bulk operation data:', error);
+  }
+
+  // console.log(databulk);
+  res.status(200).send(databulk);
 
 });
 
 
 const _dirname = path.dirname("");
-const buildPath = path.join(_dirname ,"../dashtar-admin/build"); 
+const buildPath = path.join(_dirname, "../dashtar-admin/build");
 
-app.use(express.static (buildPath));
+app.use(express.static(buildPath));
 
 
 //root route
@@ -189,64 +189,67 @@ app.use((err, req, res, next) => {
 
 
 app.get('/api/shopify/shop_login', async (_req, res) => {
-//  console.log(res.locals.shopify.session);
-const response = await shopify.api.rest.Shop.all({
-  session: res.locals.shopify.session,
-});
-
-var email  = response.data[0].email;
-var domain  = response.data[0].domain;
-var name  = response.data[0].name;
-
-var jsondata = {
-  name: name,
-  email:email,
-  password: domain,
-  role: "Admin",
-}
-
-res.status(200).send(jsondata);
-
-});
-  
-
-app.use("/", 
-shopify.validateAuthenticatedSession(),
-async (_req, res, _next) => {
-
-   const response = await shopify.api.rest.Shop.all({
-     session: res.locals.shopify.session,
-   });
-  
-   var email  = response.data[0].email;
-    console.log(email);
-    
-    const uri = process.env.MONGO_URI; 
-  const client = new MongoClient(uri, {
-    useUnifiedTopology: true,
+  //  console.log(res.locals.shopify.session);
+  const response = await shopify.api.rest.Shop.all({
+    session: res.locals.shopify.session,
   });
-  await client.connect();
-  const database = client.db('test'); 
-  const collection = database.collection('admins'); 
-  const query = { email: email };
-  const result = await collection.findOne(query);
-  // console.log("Result " + result);
- if (result) {
-  
-     return res.redirect(301, "https://mtreports.mandasadevelopment.com/login");
- } else {
-     return res.redirect(301, "https://mtreports.mandasadevelopment.com/signup");
- }
 
-}
+  var email = response.data[0].email;
+  var domain = response.data[0].domain;
+  var name = response.data[0].name;
+
+  var jsondata = {
+    name: name,
+    email: email,
+    password: domain,
+    role: "Admin",
+  }
+
+  res.status(200).send(jsondata);
+
+});
+
+let redir = true;
+app.use("/*",
+  shopify.validateAuthenticatedSession(),
+  async (_req, res, _next) => {
+
+    const response = await shopify.api.rest.Shop.all({
+      session: res.locals.shopify.session,
+    });
+
+    var email = response.data[0].email;
+    console.log(email);
+
+    const uri = process.env.MONGO_URI;
+    const client = new MongoClient(uri, {
+      useUnifiedTopology: true,
+    });
+    await client.connect();
+    const database = client.db('test');
+    const collection = database.collection('admins');
+    const query = { email: email };
+    const result = await collection.findOne(query);
+    // console.log("Result " + result);
+    if (redir) {
+      if (result) {
+        redir = false;
+        return res.redirect(301, "https://mtreports.mandasadevelopment.com/login");
+      } else {
+        redir = false;
+        return res.redirect(301, "https://mtreports.mandasadevelopment.com/signup");
+      }
+    }
+  }
 );
 
 
-app.get("/*", function (req, res){
-   res.sendFile( path.join(_dirname, "../dashtar-admin/build/index.html"),
-    function (err) { 
-      if (err) { res.status (500).send(err); } }
-       );
-       });
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(_dirname, "../dashtar-admin/build/index.html"),
+    function (err) {
+      if (err) { res.status(500).send(err); }
+    }
+  );
+});
 
 app.listen(PORT, () => console.log(`server running on port ${PORT}`));
