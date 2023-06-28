@@ -205,6 +205,7 @@ var jsondata = {
   role: "Admin",
 }
 console.log(jsondata );
+console.log( jsondata )
 res.status(200).send(jsondata);
 
 });
