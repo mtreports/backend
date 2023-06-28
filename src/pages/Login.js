@@ -9,20 +9,13 @@ import InputArea from "components/form/InputArea";
 import ImageLight from "assets/img/login-office.jpeg";
 import ImageDark from "assets/img/login-office-dark.jpeg";
 import useLoginSubmit from "../hooks/useLoginSubmit";
-import AdminServices from 'services/AdminServices';
-import ThemeLoading from "components/theme/Themeloading";
+
 const Login = () => {
   const {t}=useTranslation()
-  const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
+  const { onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
 
-  const getdatttaa = async () => {
-  const shop_detail =  await AdminServices.getshopdetail();
-    ondefaultLogin({email:shop_detail.email,password:shop_detail.password})
-  }
-  getdatttaa();
   return (
     <>
-    <ThemeLoading/>
       <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
         <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
           <div className="flex flex-col overflow-y-auto md:flex-row">
@@ -42,7 +35,7 @@ const Login = () => {
             </div>
             <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
               <div className="w-full">
-                <h1 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Login</h1>
+                <h1 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">Login Now</h1>
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <LabelArea label="Email" />
                   <InputArea
