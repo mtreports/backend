@@ -42,12 +42,6 @@ const AdminServices = {
   deleteStaff: async (id) => {
     return requests.delete(`/admin/${id}`);
   },
-  getshopdetail: async () => {
-    return requests.get("/api/shopify/shop_login");
-  },
-  getproductcount: async () => {
-    return requests.get("/api/shopify/products/count");
-  },
 };
 
 export default AdminServices;

@@ -28,8 +28,6 @@ import { useTranslation } from "react-i18next";
 import { FiCheck, FiRefreshCw, FiShoppingCart, FiTruck } from "react-icons/fi";
 import { ImCreditCard, ImStack } from "react-icons/im";
 import OrderServices from "services/OrderServices";
-import ProductServices from 'services/ProductServices';
-
 //internal import
 
 const Dashboard = () => {
@@ -41,7 +39,7 @@ const Dashboard = () => {
   dayjs.extend(isYesterday);
 
   const { currentPage, handleChangePage, lang } = useContext(SidebarContext);
-  const [products, setproducts] = useState([]);
+
   // react hook
   const [todayOrderAmount, setTodayOrderAmount] = useState(0);
   const [yesterdayOrderAmount, setYesterdayOrderAmount] = useState(0);
@@ -75,17 +73,6 @@ const Dashboard = () => {
   const { dataTable, serviceData } = useFilter(dashboardRecentOrder?.orders);
 
   const { t } = useTranslation();
-
-  useEffect(() => {
-  const getproductdata = async () => {
-
-    const all_products =  await ProductServices.getshopifyproduct();
-  
-    setproducts(all_products.nodes);
-    }
-      getproductdata();
-  }, [products]);
-  
 
   useEffect(() => {
     // today orders show
@@ -249,17 +236,9 @@ const Dashboard = () => {
 
   return (
     <>
-   
       <PageTitle>{t("DashboardOverview")}</PageTitle>
 
       <div className="grid gap-4 mb-8 md:grid-cols-4 xl:grid-cols-4">
-{/* 
-        <div className="data">
-        {products.map((item) => (
-        <p key={item}>{item.title}</p>
-      ))}
-        </div> */}
-
         <CardItemTwo
           mode={mode}
           currency={currency}

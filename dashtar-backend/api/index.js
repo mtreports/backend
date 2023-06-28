@@ -1,14 +1,9 @@
+require("dotenv").config();
 const express = require("express");
-const router = express.Router();
-const Cookies = require("js-cookie");
 const cors = require("cors");
-const { MongoClient } = require('mongodb');
-const axios = require('axios');
-const fetch  = require('node-fetch'); 
 const helmet = require("helmet");
 const path = require('path');
-const shopify = require("./shopify.js");
-const { connectDB } = require("../config/db.js");
+const { connectDB } = require("../config/db");
 const productRoutes = require("../routes/productRoutes");
 const customerRoutes = require("../routes/customerRoutes");
 const adminRoutes = require("../routes/adminRoutes");
@@ -22,13 +17,12 @@ const currencyRoutes = require("../routes/currencyRoutes");
 const languageRoutes = require("../routes/languageRoutes");
 const { isAuth, isAdmin } = require("../config/auth");
 const {GDPRWebhookHandlers} = require('./gdpr.js');
+const shopify = require("./shopify.js");
 const getProducts = require("./getproduct.js");
-require("dotenv").config();
 
 connectDB();
 const app = express();
 app.use(cors());
-
 
 const PORT = process.env.PORT || 5055;
 
@@ -52,86 +46,53 @@ app.set("trust proxy", 1);
 
 app.use(express.json({ limit: "4mb" }));
 app.use(helmet());
-app.use("/api/shopify/*", shopify.validateAuthenticatedSession());
+
+  
+// app.use("/api/*", shopify.validateAuthenticatedSession());
 
 
-app.get('/api/shopify/products/count', async (_req, res) => {
+app.get('/api/products/count', shopify.validateAuthenticatedSession(), async (_req, res) => {
 //  console.log(res.locals.shopify.session);
-  var countData = await shopify.api.rest.Product.count({
+  const countData = await shopify.api.rest.Product.count({
   session: res.locals.shopify.session,
   });
 
   res.status(200).send(countData);
   });
 
-app.get("/api/shopify/getproducts", async (req, res) => {
+app.get("/api/getproducts", shopify.validateAuthenticatedSession(), async (req, res) => {
   const session = res.locals.shopify.session;
-
-let first20products = [];
-let pageInfo;
-let endCursor = "";
-let counter = 1;
-let condition;
-let query1;
-
-query1 =  `mutation {
-  bulkOperationRunQuery(
-   query: """
-    {
-      products{
-        edges {
-          node {
-            id
-            title
-          }
+  const query = `{
+    products(first: 6) {
+    nodes {
+      id
+      title
+      variants(first: 1) {
+        nodes {
+          id
+          price
+          title
         }
       }
-    }
-    """
-  ) {
-    bulkOperation {
-      id
-      status
-    }
-    userErrors {
-      field
-      message
+      images(first: 1) {
+        nodes {
+          url
+        }
+      }
+      options(first: 3) {
+        name
+        values
+      }
     }
   }
 }`;
-
-
-const response =  await getProducts(session, query1);
-const bulkOperationid = response.body.data.bulkOperationRunQuery.bulkOperation.id;
-let databulk = "";
-try {
-     
-  let query2 = `query {
-    node(id: "${bulkOperationid}") {
-      ... on BulkOperation {
-        id
-        status
-        errorCode
-        createdAt
-        completedAt
-        objectCount
-        fileSize
-        url
-      }
-    }
-  }`;
-
-const response =  await getProducts(session, query2);
-databulk = response.body;
-
-} 
-catch (error) {
-  console.error('Error fetching bulk operation data:', error);
-}
- 
-// console.log(databulk);
-res.status(200).send(databulk);
-
+  
+    const response =  await getProducts(session, query);
+  const productdata = response.body.data.products;
+  // const countData = await shopify.api.rest.Product.count({
+  //   session: res.locals.shopify.session,
+  // });
+  res.status(200).send(productdata);
 });
 
 
@@ -162,25 +123,6 @@ app.use("/api/language/", languageRoutes);
 app.use("/api/admin/", adminRoutes);
 app.use("/api/orders/", orderRoutes);
 
-
-// // login apis
-// const instance = axios.create({
-//   baseURL: `http://localhost:5055/api`,
-//   timeout: 50000,
-//   headers: {
-//     'Accept': 'application/json',
-//     'Content-Type': 'application/json',
-//   },
-// });
-
-// const responseBody = (response) => response.data;
-
-// const req_ = {
-
-//   post: (url, body) => instance.post(url, body).then(responseBody)
-
-// };
-
 // Use express's default error handling middleware
 app.use((err, req, res, next) => {
   if (res.headersSent) return next(err);
@@ -188,56 +130,15 @@ app.use((err, req, res, next) => {
 });
 
 
-app.get('/api/shopify/shop_login', async (_req, res) => {
-//  console.log(res.locals.shopify.session);
-const response = await shopify.api.rest.Shop.all({
-  session: res.locals.shopify.session,
-});
-
-var email  = response.data[0].email;
-var domain  = response.data[0].domain;
-var name  = response.data[0].name;
-
-var jsondata = {
-  name: name,
-  email:email,
-  password: domain,
-  role: "Admin",
-}
-
-res.status(200).send(jsondata);
-
-});
-  
-
+// app.listen(PORT, () => console.log(`server running on port ${PORT}`));
 app.use("/*", 
 shopify.validateAuthenticatedSession(),
 async (_req, res, _next) => {
-
-   const response = await shopify.api.rest.Shop.all({
-     session: res.locals.shopify.session,
-   });
-  
-   var email  = response.data[0].email;
-    console.log(email);
-    
-    const uri = process.env.MONGO_URI; 
-  const client = new MongoClient(uri, {
-    useUnifiedTopology: true,
-  });
-  await client.connect();
-  const database = client.db('test'); 
-  const collection = database.collection('admins'); 
-  const query = { email: email };
-  const result = await collection.findOne(query);
-  // console.log("Result " + result);
- if (result) {
-  
-     return res.redirect(301, "https://mtreports.mandasadevelopment.com/login");
- } else {
-     return res.redirect(301, "https://mtreports.mandasadevelopment.com/signup");
- }
-
+  const shop = res.locals.shopify.session.shop;
+  const accesstoken = res.locals.shopify.session.accessToken;
+  console.log(_req);
+  // res.send("App works properly!");
+   return res.redirect(301, "https://mtreports.mandasadevelopment.com");
 }
 );
 
