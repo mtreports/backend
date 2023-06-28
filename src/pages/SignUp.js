@@ -20,7 +20,7 @@ const SignUp = () => {
 
   const getdatttaa = async () => {
     const shop_detail =  await AdminServices.getshopdetail();
-    ondefaultLogin({name:shop_detail.name, email:shop_detail.email,password:shop_detail.password, role:shop_detail.role})
+    console.log("sin" + shop_detail);
     }
     getdatttaa();
   return (
