@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const instance = axios.create({
-  baseURL: `http://3.6.228.94:80/api`,
+  baseURL: `https://mtreports.mandasadevelopment.com/api`,
   timeout: 50000,
   headers: {
     Accept: 'application/json',
