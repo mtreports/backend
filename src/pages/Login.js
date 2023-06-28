@@ -22,7 +22,6 @@ const Login = () => {
   useEffect(()=>{
     getdatttaa();
   },[])
-
   return (
     <>
     <ThemeLoading/>
