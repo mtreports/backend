@@ -528,15 +528,6 @@ const getDashboardOrders = async (req, res) => {
   }
 };
 
-const getshop = async (req, res) => {
-  const countData = await shopify.api.rest.Product.count({
-    session: res.locals.shopify.session,
-    });
-};
-
-
-
-
 module.exports = {
   getAllOrders,
   getOrderById,
@@ -548,5 +539,4 @@ module.exports = {
   getDashboardRecentOrder,
   getDashboardCount,
   getDashboardAmount,
-  getshop,
 };
