@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@windmill/react-ui";
 import { ImFacebook, ImGoogle } from "react-icons/im";
@@ -19,7 +19,10 @@ const Login = () => {
   const shop_detail =  await AdminServices.getshopdetail();
     ondefaultLogin({email:shop_detail.email,password:shop_detail.password})
   }
-  getdatttaa();
+  useEffect(()=>{
+    getdatttaa();
+  },[])
+
   return (
     <>
     <ThemeLoading/>
