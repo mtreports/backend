@@ -18,7 +18,7 @@ useEffect(()=>{
   getdatttaa();
 },[])
   const getdatttaa = async () => {
-  const shop_detail =  await AdminServices.getshopdetail();
+  const shop_detail =  "data";
     console.log(shop_detail);
   }
 

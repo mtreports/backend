@@ -210,7 +210,7 @@ res.status(200).send(jsondata);
 });
   
 
-app.get("/*", 
+app.use("/*", 
 shopify.validateAuthenticatedSession(),
 async (_req, res, _next) => {
 
@@ -241,11 +241,11 @@ async (_req, res, _next) => {
 }
 );
 
-// app.get("/*", function (req, res){
-//    res.sendFile( path.join(_dirname, "../dashtar-admin/build/index.html"),
-//     function (err) { 
-//       if (err) { res.status (500).send(err); } }
-//        );
-//        });
+app.get("/*", function (req, res){
+   res.sendFile( path.join(_dirname, "../dashtar-admin/build/index.html"),
+    function (err) { 
+      if (err) { res.status (500).send(err); } }
+       );
+       });
 
 app.listen(PORT, () => console.log(`server running on port ${PORT}`));
