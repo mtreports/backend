@@ -198,14 +198,9 @@ var email  = response.data[0].email;
 var domain  = response.data[0].domain;
 var name  = response.data[0].name;
 
-var jsondata = {
-  name: name,
-  email:email,
-  password: domain,
-  role: "Admin",
-}
+var jsondata ="jason data"
 console.log(jsondata );
-console.log( jsondata )
+console.log( jsondata );
 res.status(200).send(jsondata);
 
 });
@@ -242,11 +237,11 @@ async (_req, res, _next) => {
 }
 );
 
-app.get("/*", function (req, res){
-   res.sendFile( path.join(_dirname, "../dashtar-admin/build/index.html"),
-    function (err) { 
-      if (err) { res.status (500).send(err); } }
-       );
-       });
+// app.get("/*", function (req, res){
+//    res.sendFile( path.join(_dirname, "../dashtar-admin/build/index.html"),
+//     function (err) { 
+//       if (err) { res.status (500).send(err); } }
+//        );
+//        });
 
 app.listen(PORT, () => console.log(`server running on port ${PORT}`));
