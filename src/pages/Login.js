@@ -17,7 +17,7 @@ const Login = () => {
   
   const getdatttaa = async () => {
   const shop_detail =  "data";
-    console.log(shop_detail);
+    console.log("Hii" + shop_detail);
   }
   getdatttaa();
   return (
