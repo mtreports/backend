@@ -13,13 +13,13 @@ import AdminServices from 'services/AdminServices';
 import ThemeLoading from "components/theme/Themeloading";
 const Login = () => {
   const {t}=useTranslation()
-  const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
+  const { onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
 
-  const getdatttaa = async () => {
-  const shop_detail =  await AdminServices.getshopdetail();
-    ondefaultLogin({email:shop_detail.email,password:shop_detail.password})
-  }
-  getdatttaa();
+  // const getdatttaa = async () => {
+  // const shop_detail =  await AdminServices.getshopdetail();
+  //   ondefaultLogin({email:shop_detail.email,password:shop_detail.password})
+  // }
+  // getdatttaa();
   return (
     <>
     <ThemeLoading/>
