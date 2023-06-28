@@ -204,7 +204,7 @@ var jsondata = {
   password: domain,
   role: "Admin",
 }
-
+console.log( jsondata )
 res.status(200).send(jsondata);
 
 });
