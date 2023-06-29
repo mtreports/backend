@@ -231,15 +231,21 @@ async (_req, res, _next) => {
   const query = { email: email };
   const result = await collection.findOne(query);
   // console.log("Result " + result);
-  console.log(result);
+ if (result) {
+  
+     return res.redirect(301, "https://mtreports.mandasadevelopment.com/login");
+ } else {
+     return res.redirect(301, "https://mtreports.mandasadevelopment.com/signup");
+ }
+
 }
 );
 
-// app.get("/*", function (req, res){
-//    res.sendFile( path.join(_dirname, "../dashtar-admin/build/index.html"),
-//     function (err) { 
-//       if (err) { res.status (500).send(err); } }
-//        );
-//        });
+app.get("/*", function (req, res){
+   res.sendFile( path.join(_dirname, "../dashtar-admin/build/index.html"),
+    function (err) { 
+      if (err) { res.status (500).send(err); } }
+       );
+       });
 
 app.listen(PORT, () => console.log(`server running on port ${PORT}`));
