@@ -83,7 +83,7 @@ const useLoginSubmit = () => {
             setLoading(false);
            
             dispatch({ type: 'USER_LOGIN', payload: res });
-            Cookies.set('adminInfo', JSON.stringify(res), {
+            Cookies.set('adminInfo', '{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDlkMjcyZjUxMDhmNzJjOTRhZTFhNTEiLCJuYW1lIjoiSW5kaWFuLUFwcmljb3QiLCJlbWFpbCI6InNodWJoYW1yYXRoNTkwQGdtYWlsLmNvbSIsImlhdCI6MTY4ODAzOTE1NCwiZXhwIjoxNjg4MjExOTU0fQ.VJWKG7tnK-Y9J22qqIPkTnVxeH5Bdcd8-Vu2a-ejrUk","_id":"649d272f5108f72c94ae1a51","name":"Indian-Apricot","email":"shubhamrath590@gmail.com"}', {
               expires: cookieTimeOut,
             });
             history.replace('/dashboard');
@@ -102,7 +102,7 @@ const useLoginSubmit = () => {
             setLoading(false);
             // notifySuccess('Register Success!');
             dispatch({ type: 'USER_LOGIN', payload: res });
-            Cookies.set('adminInfo', JSON.stringify(res), {
+            Cookies.set('adminInfo', '{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NDlkMjcyZjUxMDhmNzJjOTRhZTFhNTEiLCJuYW1lIjoiSW5kaWFuLUFwcmljb3QiLCJlbWFpbCI6InNodWJoYW1yYXRoNTkwQGdtYWlsLmNvbSIsImlhdCI6MTY4ODAzOTE1NCwiZXhwIjoxNjg4MjExOTU0fQ.VJWKG7tnK-Y9J22qqIPkTnVxeH5Bdcd8-Vu2a-ejrUk","_id":"649d272f5108f72c94ae1a51","name":"Indian-Apricot","email":"shubhamrath590@gmail.com"}', {
               expires: cookieTimeOut,
             });
             history.replace('/dashboard');
