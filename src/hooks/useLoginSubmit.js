@@ -90,7 +90,7 @@ const useLoginSubmit = () => {
           }
         })
         .catch((err) => {
-          // notifyError(err ? err.response.data.message : err.message);
+          notifyError(err ? err.response.data.message : err.message);
           setLoading(false);
         });
     }
@@ -105,11 +105,11 @@ const useLoginSubmit = () => {
             Cookies.set('adminInfo', JSON.stringify(res), {
               expires: cookieTimeOut,
             });
-            history.replace('/');
+            history.replace('/dashboard');
           }
         })
         .catch((err) => {
-          // notifyError(err ? err.response.data.message : err.message);
+          notifyError(err ? err.response.data.message : err.message);
           setLoading(false);
         });
     }
