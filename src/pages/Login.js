@@ -25,7 +25,6 @@ const Login = () => {
 
   const getdatttaa = async () => {
     ondefaultLogin({email:"test@gmail.com",password:"1234"});
-    console.log(shop_detail)
   }
   return (
     <>

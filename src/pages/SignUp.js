@@ -25,9 +25,7 @@ const SignUp = () => {
   const {t}=useTranslation()
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
   const getdatttaa = async () => {
-    const shop_detail =  await AdminServices.getshopdetail();
     ondefaultLogin({name:"test", email:"text@gmail.com",password:"1234", role:"test"})
-    console.log(shop_detail)
   }
 
   return (
