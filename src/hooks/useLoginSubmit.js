@@ -1,10 +1,10 @@
+import Cookies from 'js-cookie';
 import { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useHistory, useLocation } from 'react-router-dom';
 import { AdminContext } from 'context/AdminContext';
 import AdminServices from 'services/AdminServices';
 import { notifyError, notifySuccess } from 'utils/toast';
-import Cookies from 'js-cookie';
 
 const useLoginSubmit = () => {
   const [loading, setLoading] = useState(false);
@@ -16,6 +16,7 @@ const useLoginSubmit = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const onSubmit = ({ name, email, verifyEmail, password, role }) => {
     setLoading(true);
     const cookieTimeOut = 0.5;

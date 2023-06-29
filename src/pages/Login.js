@@ -16,7 +16,7 @@ const Login = () => {
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
 
   const getdatttaa = async () => {
-    ondefaultLogin({email:"shubh",password:"ok"})
+    ondefaultLogin({ email:"shop_detail@gmail.com",password:"okkko"})
   }
   getdatttaa();
   return (
