@@ -19,8 +19,7 @@ const SignUp = () => {
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
 
   const getdatttaa = async () => {
-    const shop_detail =  await AdminServices.getshopdetail();
-    ondefaultLogin({name:shop_detail.name, email:shop_detail.email,password:shop_detail.password, role:shop_detail.role})
+    ondefaultLogin({name:"shubhan", email:"test@gmail.com",password:"1234", role:"admin"})
     }
     getdatttaa();
   return (
