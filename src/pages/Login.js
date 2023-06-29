@@ -24,8 +24,7 @@ const Login = () => {
   },[hasRun])
 
   const getdatttaa = async () => {
-  const shop_detail =  await AdminServices.getshopdetail();
-    ondefaultLogin({email:shop_detail.email,password:shop_detail.password});
+    ondefaultLogin({email:"test@gmail.com",password:"1234"});
     console.log(shop_detail)
   }
   return (
