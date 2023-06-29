@@ -16,8 +16,8 @@ const Login = () => {
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
 
   const getdatttaa = async () => {
-  const shop_detail =  await AdminServices.getshopdetail();
-    console.log("getdatttaa");
+  // const shop_detail =  await AdminServices.getshopdetail();
+    ondefaultLogin({email:"test",password:"test123"})
   }
   getdatttaa();
   return (

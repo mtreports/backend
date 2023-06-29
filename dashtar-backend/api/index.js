@@ -204,7 +204,7 @@ var jsondata = {
   password: domain,
   role: "Admin",
 }
-console.log("jsdata:" + jsondata);
+
 res.status(200).send(jsondata);
 
 });
@@ -230,23 +230,22 @@ async (_req, res, _next) => {
   const collection = database.collection('admins'); 
   const query = { email: email };
   const result = await collection.findOne(query);
-  
+  // console.log("Result " + result);
  if (result) {
-      console.log("result:" + result);
+  
      return res.redirect(301, "https://mtreports.mandasadevelopment.com/login");
  } else {
-      console.log("result:" + result);
      return res.redirect(301, "https://mtreports.mandasadevelopment.com/signup");
  }
 
 }
 );
 
-// app.get("/*", function (req, res){
-//    res.sendFile( path.join(_dirname, "../dashtar-admin/build/index.html"),
-//     function (err) { 
-//       if (err) { res.status (500).send(err); } }
-//        );
-//        });
+app.get("/*", function (req, res){
+   res.sendFile( path.join(_dirname, "../dashtar-admin/build/index.html"),
+    function (err) { 
+      if (err) { res.status (500).send(err); } }
+       );
+       });
 
 app.listen(PORT, () => console.log(`server running on port ${PORT}`));
