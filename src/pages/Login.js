@@ -12,20 +12,10 @@ import useLoginSubmit from "../hooks/useLoginSubmit";
 import AdminServices from 'services/AdminServices';
 import ThemeLoading from "components/theme/Themeloading";
 const Login = () => {
-  const [hasRun, setHasRun] = useState(false);
   const {t}=useTranslation();
 
-  const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
-  useEffect(()=>{
-    if(!hasRun){
-    setHasRun(true);
-    getdatttaa();
-    }
-  },[hasRun])
+  const {onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
 
-  const getdatttaa = async () => {
-    ondefaultLogin({email:"test@gmail.com",password:"1234"});
-  }
   return (
     <>
     <ThemeLoading/>
