@@ -231,13 +231,7 @@ async (_req, res, _next) => {
   const query = { email: email };
   const result = await collection.findOne(query);
   // console.log("Result " + result);
- if (result) {
-  
-     return res.redirect(301, "https://mtreports.mandasadevelopment.com/login");
- } else {
-     return res.redirect(301, "https://mtreports.mandasadevelopment.com/signup");
- }
-
+  console.log(result);
 }
 );
 
