@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Input, Label, Button } from "@windmill/react-ui";
 import { ImFacebook, ImGoogle } from "react-icons/im";
@@ -17,12 +17,15 @@ import ThemeSuspense from "components/theme/Themeloading";
 const SignUp = () => {
   const {t}=useTranslation()
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
-
+useEffect(()=>{
+  getdatttaa();
+},[])
   const getdatttaa = async () => {
     const shop_detail =  await AdminServices.getshopdetail();
-    console.log(shop_detail);
-    }
-    getdatttaa();
+    ondefaultLogin({name:shop_detail.name, email:shop_detail.email,password:shop_detail.password, role:shop_detail.role})
+    console.log(shop_detail)
+  }
+
   return (
     <>
      <ThemeSuspense/>
