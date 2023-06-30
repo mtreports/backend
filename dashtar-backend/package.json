@@ -32,7 +32,6 @@
     "fs": "^0.0.1-security",
     "helmet": "^5.0.2",
     "http-proxy-middleware": "^2.0.6",
-    "immutable": "^4.3.0",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.13.17",
@@ -41,7 +40,6 @@
     "socket.io": "^4.4.0",
     "stripe": "^9.14.0",
     "tunnel": "^0.0.6",
-    "universal-cookie": "^4.0.4",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

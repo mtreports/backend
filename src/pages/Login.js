@@ -1,4 +1,4 @@
-import {React, useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@windmill/react-ui";
 import { ImFacebook, ImGoogle } from "react-icons/im";
@@ -15,16 +15,11 @@ const Login = () => {
   const {t}=useTranslation()
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
 
-    const getdatttaa = async () => {
-      // const shop_detail =  await AdminServices.getshopdetail();
-      // console.log(shop_detail);
-      ondefaultLogin({email:"shop_detail.email",password:"shop_detail.password"})
-    }
-        getdatttaa();
-
-
-
- 
+  const getdatttaa = async () => {
+  // const shop_detail =  await AdminServices.getshopdetail();
+    ondefaultLogin({email:"shop_detail.email",password:"shop_detail.password"})
+  }
+  getdatttaa();
   return (
     <>
     <ThemeLoading/>

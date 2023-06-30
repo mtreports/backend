@@ -2,13 +2,11 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 
 const instance = axios.create({
-  baseURL: `https://mtreports.mandasadevelopment.com:80/api`,
+  baseURL: `https://mtreports.mandasadevelopment.com:443/api`,
   timeout: 50000,
   headers: {
-
-    'Accept': 'application/json',
+    Accept: 'application/json',
     'Content-Type': 'application/json',
-    "Access-Control-Allow-Origin": '*'
   },
 });
 

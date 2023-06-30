@@ -29,7 +29,7 @@ import { FiCheck, FiRefreshCw, FiShoppingCart, FiTruck } from "react-icons/fi";
 import { ImCreditCard, ImStack } from "react-icons/im";
 import OrderServices from "services/OrderServices";
 import ProductServices from 'services/ProductServices';
-import SyncData from "components/common/SyncProgress";
+
 //internal import
 
 const Dashboard = () => {
@@ -80,55 +80,12 @@ const Dashboard = () => {
   const getproductdata = async () => {
 
     const all_products =  await ProductServices.getshopifyproduct();
-   
+  
     setproducts(all_products.nodes);
-    console.log(products);
     }
       getproductdata();
   }, [products]);
   
-
-  // use effect for reading data file through url
-
-  const [jsonData, setJsonData] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch('https://storage.googleapis.com/shopify-tiers-assets-prod-us-east1/f2t0nq1ydgih78cwfmww8xkon4ly?GoogleAccessId=assets-us-prod%40shopify-tiers.iam.gserviceaccount.com&Expires=1688625588&Signature=FG9zH5H%2BGOiJNWujiwaN%2BuwH4wmxMrLCU40V8jsgjKQWTHQCsQyyVG%2ByLWyutEgNYmL6CxX54nTFqrWzD2Mrbtx2q%2FCY8ZWN3MSmSF0NjijLd49LVQxcyY1j%2Flh4JjQESGC0cUMexjycZCXnMi3lpbibellhZiiq6CTISScSNB5hSSPHDwTeuT7DeZ%2BUEtGGkpZvqEu0uS9idvmLK9BXrtq6tApPZAbYJQuPvBMtICyr8KVpga7ROxcLCEo%2FkbZzfkA5DcqOA4Cxf2rXKXeiXsOVwvkl9xXHdMXcO1EY6n3IjZqwZQoE1bdUSf03gW0fPuX65kZo4G57rfc5EtglqA%3D%3D&response-content-disposition=attachment%3B+filename%3D%22bulk-3229798924600.jsonl%22%3B+filename%2A%3DUTF-8%27%27bulk-3229798924600.jsonl&response-content-type=application%2Fjsonl');
-  //       const reader = response.body.getReader();
-  //       let data = '';
-  //       let done = false;
-
-  //       while (!done) {
-  //         const { value, done: readerDone } = await reader.read();
-
-  //         if (readerDone) {
-  //           done = true;
-  //           break;
-  //         }
-
-  //         const chunk = new TextDecoder('utf-8').decode(value);
-  //         data += chunk;
-
-  //         const lines = data.split('\n');
-  //         data = lines.pop();
-
-  //         for (const line of lines) {
-  //           const jsonLine = JSON.parse(line);
-  //           setJsonData((prevData) => [...prevData, jsonLine]);
-  //         }
-  //       }
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
-
-  // use effect for reading data file through url
 
   useEffect(() => {
     // today orders show
@@ -292,14 +249,7 @@ const Dashboard = () => {
 
   return (
     <>
-    <SyncData />
-    <div>
-    {jsonData.map((lineData, index) => (
-        <div key={index}>
-          {JSON.stringify(lineData)}
-        </div>
-      ))}
-    </div>
+   
       <PageTitle>{t("DashboardOverview")}</PageTitle>
 
       <div className="grid gap-4 mb-8 md:grid-cols-4 xl:grid-cols-4">
