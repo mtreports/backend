@@ -26,7 +26,7 @@ const useLoginSubmit = () => {
         .then((res) => {
           if (res) {
             setLoading(false);
-            notifySuccess('Login Success!');
+            // notifySuccess('Login Success!');
             dispatch({ type: 'USER_LOGIN', payload: res });
             Cookies.set('adminInfo', JSON.stringify(res), {
               expires: cookieTimeOut,
@@ -45,7 +45,7 @@ const useLoginSubmit = () => {
         .then((res) => {
           if (res) {
             setLoading(false);
-            notifySuccess('Register Success!');
+            // notifySuccess('Register Success!');
             dispatch({ type: 'USER_LOGIN', payload: res });
             Cookies.set('adminInfo', JSON.stringify(res), {
               expires: cookieTimeOut,
@@ -71,12 +71,58 @@ const useLoginSubmit = () => {
         });
     }
   };
+
+  const ondefaultLogin = ({name, email, password, role }) => {
+    setLoading(true);
+    const cookieTimeOut = 0.5;
+
+    if (location.pathname === '/login') {
+      AdminServices.loginAdmin({email, password})
+        .then((res) => {
+          if (res) {
+            setLoading(false);
+           
+            dispatch({ type: 'USER_LOGIN', payload: res });
+            Cookies.set('adminInfo', JSON.stringify(res), {
+              expires: cookieTimeOut,
+            });
+            history.replace('/dashboard');
+          }
+        })
+        .catch((err) => {
+          // notifyError(err ? err.response.data.message : err.message);
+          setLoading(false);
+        });
+    }
+
+    if (location.pathname === '/signup') {
+      AdminServices.registerAdmin({ name, email, password, role })
+        .then((res) => {
+          if (res) {
+            setLoading(false);
+            // notifySuccess('Register Success!');
+            dispatch({ type: 'USER_LOGIN', payload: res });
+            Cookies.set('adminInfo', JSON.stringify(res), {
+              expires: cookieTimeOut,
+            });
+            history.replace('/dashboard');
+          }
+        })
+        .catch((err) => {
+          // notifyError(err ? err.response.data.message : err.message);
+          setLoading(false);
+        });
+    }
+
+  };
+
   return {
     onSubmit,
     register,
     handleSubmit,
     errors,
     loading,
+    ondefaultLogin,
   };
 };
 
