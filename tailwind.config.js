@@ -10,6 +10,7 @@ module.exports = windmill({
     './**/*.{js,ts,jsx,tsx}',
     // Add more here
   ],
+  
   theme: {
     extend: {
       fontFamily: {
