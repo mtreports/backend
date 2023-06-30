@@ -23,14 +23,32 @@ const languageRoutes = require("../routes/languageRoutes");
 const { isAuth, isAdmin } = require("../config/auth");
 const {GDPRWebhookHandlers} = require('./gdpr.js');
 const getProducts = require("./getproduct.js");
+const { syncShopifyData } = require("./shopifySync.js");
+const { AddShop } = require("./Shop.js");
+
 require("dotenv").config();
 
 connectDB();
 const app = express();
 app.use(cors());
 
-
 const PORT = process.env.PORT || 5055;
+var productbulkId = "";
+
+async function connectToMongoDB() {
+  try {
+    const client = new MongoClient(uri);
+   await client.connect();
+    return client.db('test'); 
+      // Return the connected database object
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    throw error;
+  }
+}
+
+const uri = process.env.MONGO_URI; 
+
 
 
 app.get(shopify.config.auth.path, shopify.auth.begin());
@@ -67,11 +85,8 @@ app.get('/api/shopify/products/count', async (_req, res) => {
 app.get("/api/shopify/getproducts", async (req, res) => {
   const session = res.locals.shopify.session;
 
-let first20products = [];
-let pageInfo;
-let endCursor = "";
-let counter = 1;
-let condition;
+
+  // get product api
 let query1;
 
 query1 =  `mutation {
@@ -83,6 +98,13 @@ query1 =  `mutation {
           node {
             id
             title
+            handle
+            descriptionHtml
+            vendor
+            productType
+            createdAt
+            updatedAt
+            
           }
         }
       }
@@ -100,14 +122,37 @@ query1 =  `mutation {
   }
 }`;
 
-
 const response =  await getProducts(session, query1);
-const bulkOperationid = response.body.data.bulkOperationRunQuery.bulkOperation.id;
+
+var bulkOperationid = response.body.data.bulkOperationRunQuery.bulkOperation.id;
+
+
+const response1 = await shopify.api.rest.Shop.all({
+  session: res.locals.shopify.session,
+});
+
+
+var email  = response1.data[0].email;
+var shop_url = response1.data[0].domain;
+var name  = response1.data[0].name;
+const db = await connectToMongoDB();
+const collection = db.collection('shops'); 
+const query = { shop_url: shop_url };
+const result = await collection.findOne(query);
+
+const updatedList = [bulkOperationid]; 
+if(result){
+   if(result.bulkop[0] == ""){
+    collection.updateOne({shop_url:shop_url },{$set:{bulkop: updatedList }});
+   }
+}
+
 let databulk = "";
+
 try {
      
   let query2 = `query {
-    node(id: "${bulkOperationid}") {
+    node(id: "${result.bulkop[0]}") {
       ... on BulkOperation {
         id
         status
@@ -121,15 +166,25 @@ try {
     }
   }`;
 
+  
+
 const response =  await getProducts(session, query2);
 databulk = response.body;
 
+
+
+
 } 
+
 catch (error) {
   console.error('Error fetching bulk operation data:', error);
 }
  
-// console.log(databulk);
+
+collection.updateOne({shop_url:shop_url },{$set:{bulkop: [result.bulkop[0], databulk.data.node.url] }});
+
+console.log(databulk.data.node.url);
+
 res.status(200).send(databulk);
 
 });
@@ -163,24 +218,6 @@ app.use("/api/admin/", adminRoutes);
 app.use("/api/orders/", orderRoutes);
 
 
-// // login apis
-// const instance = axios.create({
-//   baseURL: `http://localhost:5055/api`,
-//   timeout: 50000,
-//   headers: {
-//     'Accept': 'application/json',
-//     'Content-Type': 'application/json',
-//   },
-// });
-
-// const responseBody = (response) => response.data;
-
-// const req_ = {
-
-//   post: (url, body) => instance.post(url, body).then(responseBody)
-
-// };
-
 // Use express's default error handling middleware
 app.use((err, req, res, next) => {
   if (res.headersSent) return next(err);
@@ -203,6 +240,7 @@ var jsondata = {
   email:email,
   password: domain,
   role: "Admin",
+  bulkop: []
 }
 
 res.status(200).send(jsondata);
@@ -213,41 +251,35 @@ res.status(200).send(jsondata);
 app.use("/*", 
 shopify.validateAuthenticatedSession(),
 async (_req, res, _next) => {
-<<<<<<< HEAD
-  // const shop = res.locals.shopify.session.shop;
-  // const accesstoken = res.locals.shopify.session.accessToken;
-  // console.log(_req);
-  // res.send("App works properly!");
-   return res.redirect(301, "http://3.6.228.94:4000");
-=======
 
    const response = await shopify.api.rest.Shop.all({
      session: res.locals.shopify.session,
    });
-  
+   
    var email  = response.data[0].email;
-    console.log(email);
-    
-    const uri = process.env.MONGO_URI; 
-  const client = new MongoClient(uri, {
-    useUnifiedTopology: true,
-  });
-  await client.connect();
-  const database = client.db('test'); 
-  const collection = database.collection('admins'); 
-  const query = { email: email };
-  const result = await collection.findOne(query);
-  // console.log("Result " + result);
- if (result) {
-  
-     return res.redirect(301, "https://mtreports.mandasadevelopment.com/login");
+   var shop_url = response.data[0].domain;
+   var name  = response.data[0].name;
+
+   const db = await connectToMongoDB();
+
+  // admin collection query
+  const AdminDbcollection = db.collection('admins'); 
+  const AdminQuery = { email: email };
+
+
+  const Adminresult = await AdminDbcollection.findOne(AdminQuery);
+
+ if (Adminresult) {
+     syncShopifyData();
+     return res.redirect(301, "http://localhost:4000/login");
  } else {
-     return res.redirect(301, "https://mtreports.mandasadevelopment.com/signup");
+
+     AddShop({ domain: shop_url, name: name, bulkop: ["",""] });
+     return res.redirect(301, "http://localhost:4000/signup");
  }
 
->>>>>>> 59e71c6641f62d04c222553fbd99cc2dabfc4b88
-}
-);
+
+});
 
 app.get("/*", function (req, res){
    res.sendFile( path.join(_dirname, "../dashtar-admin/build/index.html"),
@@ -255,5 +287,7 @@ app.get("/*", function (req, res){
       if (err) { res.status (500).send(err); } }
        );
        });
+
+
 
 app.listen(PORT, () => console.log(`server running on port ${PORT}`));
