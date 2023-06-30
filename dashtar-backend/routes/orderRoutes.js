@@ -44,4 +44,6 @@ router.put("/:id", updateOrder);
 //delete a order
 router.delete("/:id", deleteOrder);
 
+router.get("/dashboard-amount", shopify.validateAuthenticatedSession(), getDashboardAmount);
+
 module.exports = router;

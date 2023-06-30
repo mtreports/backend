@@ -36,6 +36,9 @@ const ProductServices = {
   deleteManyProducts: async (body) => {
     return requests.patch("/products/delete/many", body);
   },
+  getshopifyproduct: async (body) => {
+    return requests.get("/shopify/getproducts", body);
+  },
 };
 
 export default ProductServices;
