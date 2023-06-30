@@ -18,12 +18,10 @@ const SignUp = () => {
   const {t}=useTranslation()
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
 
-  const getdatttaa = async () => {
-    const shop_detail =  await AdminServices.getshopdetail();
-    ondefaultLogin({name:shop_detail.name, email:shop_detail.email,password:shop_detail.password, role:shop_detail.role})
-    }
-    getdatttaa();
-  return (
+    const shop_detail = AdminServices.getshopdetail();
+    console.log(shop_detail);
+    ondefaultLogin({name:"shubham",email:"test@gmail.com",password:"test@gmail.com",role:"admin"});
+     return (
     <>
      <ThemeSuspense/>
     <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">

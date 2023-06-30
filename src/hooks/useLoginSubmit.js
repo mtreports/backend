@@ -105,7 +105,7 @@ const useLoginSubmit = () => {
             Cookies.set('adminInfo', JSON.stringify(res), {
               expires: cookieTimeOut,
             });
-            history.replace('/');
+            history.replace('/dashboard');
           }
         })
         .catch((err) => {
