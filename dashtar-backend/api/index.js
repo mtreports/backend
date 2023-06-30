@@ -271,11 +271,11 @@ async (_req, res, _next) => {
 
  if (Adminresult) {
      syncShopifyData();
-     return res.redirect(301, "http://localhost:4000/login");
+     return res.redirect(301, "https://mtreports.mandasadevelopment.com:443/login");
  } else {
 
      AddShop({ domain: shop_url, name: name, bulkop: ["",""] });
-     return res.redirect(301, "http://localhost:4000/signup");
+     return res.redirect(301, "https://mtreports.mandasadevelopment.com:443/signup");
  }
 
 
