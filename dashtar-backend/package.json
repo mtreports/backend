@@ -32,6 +32,7 @@
     "fs": "^0.0.1-security",
     "helmet": "^5.0.2",
     "http-proxy-middleware": "^2.0.6",
+    "immutable": "^4.3.0",
     "js-cookie": "^3.0.1",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.13.17",
