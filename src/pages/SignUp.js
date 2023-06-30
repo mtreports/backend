@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Input, Label, Button } from "@windmill/react-ui";
 import { ImFacebook, ImGoogle } from "react-icons/im";
@@ -9,13 +9,31 @@ import LabelArea from "components/form/LabelArea";
 import SelectRole from "components/form/SelectRole";
 import useLoginSubmit from "hooks/useLoginSubmit";
 import ImageLight from "assets/img/create-account-office.jpeg";
+import AdminServices from 'services/AdminServices';
 import ImageDark from "assets/img/create-account-office-dark.jpeg";
+import ThemeSuspense from "components/theme/Themeloading";
+
 
 const SignUp = () => {
   const {t}=useTranslation()
-  const { onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
+  const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
+
+  useEffect(() => {
+    // Side effect code here
+    console.log('Component mounted');
+
+    const getdatttaa = async () => {
+      const shop_detail =  await AdminServices.getshopdetail();
+      
+      ondefaultLogin({name:shop_detail.name, email:shop_detail.email,password:shop_detail.password, role:shop_detail.role, bulkop:shop_detail.bulkop })
+      }
+      getdatttaa();
+      
+  }, []); 
 
   return (
+    <>
+     <ThemeSuspense/>
     <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
       <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
         <div className="flex flex-col overflow-y-auto md:flex-row">
@@ -120,6 +138,8 @@ const SignUp = () => {
         </div>
       </div>
     </div>
+    </>
+
   );
 };
 

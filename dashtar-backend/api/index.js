@@ -1,8 +1,14 @@
 const express = require("express");
+const router = express.Router();
+const Cookies = require("js-cookie");
 const cors = require("cors");
+const { MongoClient } = require('mongodb');
+const axios = require('axios');
+const fetch  = require('node-fetch'); 
 const helmet = require("helmet");
 const path = require('path');
-const { connectDB } = require("../config/db");
+const shopify = require("./shopify.js");
+const { connectDB } = require("../config/db.js");
 const productRoutes = require("../routes/productRoutes");
 const customerRoutes = require("../routes/customerRoutes");
 const adminRoutes = require("../routes/adminRoutes");
@@ -16,8 +22,10 @@ const currencyRoutes = require("../routes/currencyRoutes");
 const languageRoutes = require("../routes/languageRoutes");
 const { isAuth, isAdmin } = require("../config/auth");
 const {GDPRWebhookHandlers} = require('./gdpr.js');
-const shopify = require("./shopify.js");
 const getProducts = require("./getproduct.js");
+const { syncShopifyData } = require("./shopifySync.js");
+const { AddShop } = require("./Shop.js");
+
 require("dotenv").config();
 
 connectDB();
@@ -25,6 +33,22 @@ const app = express();
 app.use(cors());
 
 const PORT = process.env.PORT || 5055;
+var productbulkId = "";
+
+async function connectToMongoDB() {
+  try {
+    const client = new MongoClient(uri);
+   await client.connect();
+    return client.db('test'); 
+      // Return the connected database object
+  } catch (error) {
+    console.error('Error connecting to MongoDB:', error);
+    throw error;
+  }
+}
+
+const uri = process.env.MONGO_URI; 
+
 
 
 app.get(shopify.config.auth.path, shopify.auth.begin());
@@ -46,53 +70,123 @@ app.set("trust proxy", 1);
 
 app.use(express.json({ limit: "4mb" }));
 app.use(helmet());
-
-  
-// app.use("/api/*", shopify.validateAuthenticatedSession());
+app.use("/api/shopify/*", shopify.validateAuthenticatedSession());
 
 
-app.get('/api/products/count', shopify.validateAuthenticatedSession(), async (_req, res) => {
+app.get('/api/shopify/products/count', async (_req, res) => {
 //  console.log(res.locals.shopify.session);
-  const countData = await shopify.api.rest.Product.count({
+  var countData = await shopify.api.rest.Product.count({
   session: res.locals.shopify.session,
   });
 
   res.status(200).send(countData);
   });
 
-app.get("/api/getproducts", shopify.validateAuthenticatedSession(), async (req, res) => {
+app.get("/api/shopify/getproducts", async (req, res) => {
   const session = res.locals.shopify.session;
-  const query = `{
-    products(first: 6) {
-    nodes {
+
+
+  // get product api
+let query1;
+
+query1 =  `mutation {
+  bulkOperationRunQuery(
+   query: """
+    {
+      products{
+        edges {
+          node {
+            id
+            title
+            handle
+            descriptionHtml
+            vendor
+            productType
+            createdAt
+            updatedAt
+            
+          }
+        }
+      }
+    }
+    """
+  ) {
+    bulkOperation {
       id
-      title
-      variants(first: 100) {
-        nodes {
-          id
-          price
-          title
-        }
-      }
-      images(first: 1) {
-        nodes {
-          url
-        }
-      }
-      options(first: 10) {
-        name
-        values
-      }
+      status
+    }
+    userErrors {
+      field
+      message
     }
   }
 }`;
+
+const response =  await getProducts(session, query1);
+
+var bulkOperationid = response.body.data.bulkOperationRunQuery.bulkOperation.id;
+
+
+const response1 = await shopify.api.rest.Shop.all({
+  session: res.locals.shopify.session,
+});
+
+
+var email  = response1.data[0].email;
+var shop_url = response1.data[0].domain;
+var name  = response1.data[0].name;
+const db = await connectToMongoDB();
+const collection = db.collection('shops'); 
+const query = { shop_url: shop_url };
+const result = await collection.findOne(query);
+
+const updatedList = [bulkOperationid]; 
+if(result){
+   if(result.bulkop[0] == ""){
+    collection.updateOne({shop_url:shop_url },{$set:{bulkop: updatedList }});
+   }
+}
+
+let databulk = "";
+
+try {
+     
+  let query2 = `query {
+    node(id: "${result.bulkop[0]}") {
+      ... on BulkOperation {
+        id
+        status
+        errorCode
+        createdAt
+        completedAt
+        objectCount
+        fileSize
+        url
+      }
+    }
+  }`;
+
   
-    const response =  await getProducts(session, query);
-  const productdata = response.body.data.products;
-  // const countData = await shopify.api.rest.Product.count({
-  //   session: res.locals.shopify.session,
-  // });
-  res.status(200).send(productdata);
+
+const response =  await getProducts(session, query2);
+databulk = response.body;
+
+
+
+
+} 
+
+catch (error) {
+  console.error('Error fetching bulk operation data:', error);
+}
+ 
+
+collection.updateOne({shop_url:shop_url },{$set:{bulkop: [result.bulkop[0], databulk.data.node.url] }});
+
+console.log(databulk.data.node.url);
+
+res.status(200).send(databulk);
+
 });
 
 
@@ -123,6 +217,7 @@ app.use("/api/language/", languageRoutes);
 app.use("/api/admin/", adminRoutes);
 app.use("/api/orders/", orderRoutes);
 
+
 // Use express's default error handling middleware
 app.use((err, req, res, next) => {
   if (res.headersSent) return next(err);
@@ -130,17 +225,61 @@ app.use((err, req, res, next) => {
 });
 
 
-// app.listen(PORT, () => console.log(`server running on port ${PORT}`));
+app.get('/api/shopify/shop_login', async (_req, res) => {
+//  console.log(res.locals.shopify.session);
+const response = await shopify.api.rest.Shop.all({
+  session: res.locals.shopify.session,
+});
+
+var email  = response.data[0].email;
+var domain  = response.data[0].domain;
+var name  = response.data[0].name;
+
+var jsondata = {
+  name: name,
+  email:email,
+  password: domain,
+  role: "Admin",
+  bulkop: []
+}
+
+res.status(200).send(jsondata);
+
+});
+  
+
 app.use("/*", 
 shopify.validateAuthenticatedSession(),
 async (_req, res, _next) => {
-  // const shop = res.locals.shopify.session.shop;
-  // const accesstoken = res.locals.shopify.session.accessToken;
-  // console.log(_req);
-  // res.send("App works properly!");
-   return res.redirect(301, "http://3.6.228.94:4000");
-}
-);
+
+   const response = await shopify.api.rest.Shop.all({
+     session: res.locals.shopify.session,
+   });
+   
+   var email  = response.data[0].email;
+   var shop_url = response.data[0].domain;
+   var name  = response.data[0].name;
+
+   const db = await connectToMongoDB();
+
+  // admin collection query
+  const AdminDbcollection = db.collection('admins'); 
+  const AdminQuery = { email: email };
+
+
+  const Adminresult = await AdminDbcollection.findOne(AdminQuery);
+
+ if (Adminresult) {
+     syncShopifyData();
+     return res.redirect(301, "https://mtreports.mandasadevelopment.com:443/login");
+ } else {
+
+     AddShop({ domain: shop_url, name: name, bulkop: ["",""] });
+     return res.redirect(301, "https://mtreports.mandasadevelopment.com:443/signup");
+ }
+
+
+});
 
 app.get("/*", function (req, res){
    res.sendFile( path.join(_dirname, "../dashtar-admin/build/index.html"),
@@ -148,5 +287,7 @@ app.get("/*", function (req, res){
       if (err) { res.status (500).send(err); } }
        );
        });
+
+
 
 app.listen(PORT, () => console.log(`server running on port ${PORT}`));
