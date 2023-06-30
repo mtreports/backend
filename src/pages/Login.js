@@ -14,11 +14,11 @@ import ThemeLoading from "components/theme/Themeloading";
 const Login = () => {
   const {t}=useTranslation()
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
-  
+
     const getdatttaa = async () => {
-      const shop_detail =  await AdminServices.getshopdetail();
-      console.log(shop_detail);
-      ondefaultLogin({email:shop_detail.email,password:shop_detail.password})
+      // const shop_detail =  await AdminServices.getshopdetail();
+      // console.log(shop_detail);
+      ondefaultLogin({email:"shop_detail.email",password:"shop_detail.password"})
     }
         getdatttaa();
 
