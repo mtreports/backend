@@ -1,4 +1,4 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Input, Label, Button } from "@windmill/react-ui";
 import { ImFacebook, ImGoogle } from "react-icons/im";
@@ -17,7 +17,7 @@ import ThemeSuspense from "components/theme/Themeloading";
 const SignUp = () => {
   const {t}=useTranslation()
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
-
+  const [datastatus, setdatastatus] = useState(true);
   useEffect(() => {
     // Side effect code here
     console.log('Component mounted');
@@ -27,8 +27,9 @@ const SignUp = () => {
       
       ondefaultLogin({name:shop_detail.name, email:shop_detail.email,password:shop_detail.password, role:shop_detail.role, bulkop:shop_detail.bulkop })
       }
+      if(datastatus){
       getdatttaa();
-      
+      } 
   }, []); 
 
   return (
