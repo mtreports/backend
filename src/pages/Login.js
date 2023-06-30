@@ -15,9 +15,14 @@ const Login = () => {
   const {t}=useTranslation()
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
 
-  const shop_detail = AdminServices.getshopdetail();
-  console.log(shop_detail);
-    ondefaultLogin({email:"test@gmail.com",password:"ondfdf"})
+  const getdatttaa = async () => {
+  const shop_detail =  await AdminServices.getshopdetail();
+    ondefaultLogin({email:shop_detail.email,password:shop_detail.password})
+    localStorage.setItem("on","true");
+  }
+if(localStorage.getItem("on") == null){
+  getdatttaa();
+}
   return (
     <>
     <ThemeLoading/>
