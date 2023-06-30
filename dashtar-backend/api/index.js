@@ -32,7 +32,7 @@ connectDB();
 const app = express();
 app.use(cors());
 
-const PORT = process.env.PORT || 5055;
+const PORT = process.env.PORT || 80 ;
 var productbulkId = "";
 
 async function connectToMongoDB() {

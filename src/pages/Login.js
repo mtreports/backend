@@ -14,7 +14,7 @@ import ThemeLoading from "components/theme/Themeloading";
 const Login = () => {
   const {t}=useTranslation()
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
-
+  const [datastatus, setdatastatus] = useState(true);
   useEffect(() => {
     // Side effect code here
    
@@ -22,10 +22,14 @@ const Login = () => {
     const getdatttaa = async () => {
       const shop_detail =  await AdminServices.getshopdetail();
     
+      
         ondefaultLogin({email:shop_detail.email,password:shop_detail.password})
+        setdatastatus(false);
       }
-      getdatttaa();
-
+      if(datastatus){
+        getdatttaa();
+      }
+    
   }, []); 
 
 
