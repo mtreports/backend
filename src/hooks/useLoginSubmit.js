@@ -26,12 +26,14 @@ const useLoginSubmit = () => {
         .then((res) => {
           if (res) {
             setLoading(false);
+            console.log(res);
+            alert(res);
             // notifySuccess('Login Success!');
             dispatch({ type: 'USER_LOGIN', payload: res });
             Cookies.set('adminInfo', JSON.stringify(res), {
               expires: cookieTimeOut,
             });
-            history.replace('/');
+            history.replace('/dashboard');
           }
         })
         .catch((err) => {
@@ -45,6 +47,8 @@ const useLoginSubmit = () => {
         .then((res) => {
           if (res) {
             setLoading(false);
+            console.log(res);
+            alert(res);
             // notifySuccess('Register Success!');
             dispatch({ type: 'USER_LOGIN', payload: res });
             Cookies.set('adminInfo', JSON.stringify(res), {
