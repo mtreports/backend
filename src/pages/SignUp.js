@@ -18,8 +18,10 @@ const SignUp = () => {
   const {t}=useTranslation()
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
   const getdatttaa = async () => {
-    const shop_detail =  await AdminServices.getshopdetail();
-    ondefaultLogin({name:shop_detail.name, email:shop_detail.email,password:shop_detail.password, role:shop_detail.role })
+    await AdminServices.getshopdetail()
+    .then((res)=>{
+      console.log(res);
+    })
     }
     getdatttaa();
   return (
