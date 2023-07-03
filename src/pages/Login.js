@@ -11,17 +11,14 @@ import ImageDark from "assets/img/login-office-dark.jpeg";
 import useLoginSubmit from "../hooks/useLoginSubmit";
 import AdminServices from 'services/AdminServices';
 import ThemeLoading from "components/theme/Themeloading";
-const Login = () => {
+const Login = async () => {
   const {t}=useTranslation()
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
 
-  const getdatttaa = async () => {
     await AdminServices.getshopdetail().then((res)=>{
       console.log(res);
       ondefaultLogin({email:"shop_detail.email",password:"shop_detail.password"})
     })
-    }
-    getdatttaa();
   return (
     <>
     <ThemeLoading/>

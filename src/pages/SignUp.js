@@ -14,16 +14,13 @@ import ImageDark from "assets/img/create-account-office-dark.jpeg";
 import ThemeSuspense from "components/theme/Themeloading";
 
 
-const SignUp = () => {
+const SignUp = async () => {
   const {t}=useTranslation()
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
-   const getdatttaa = async () => {
       await AdminServices.getshopdetail().then((res)=>{
         console.log(res);
         ondefaultLogin({name:"shop_detail.name", email:"shop_detail.email",password:"shop_detail.password", role:"shop_detail.role" });
       });
-    }
-      getdatttaa();
   return (
     <>
      <ThemeSuspense/>
