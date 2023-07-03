@@ -89,7 +89,7 @@
     "prestart": "npm run tailwind:dev",
     "start": "react-scripts start",
     "prebuild": "npm run tailwind:build",
-    "build": "react-scripts  --openssl-legacy-provider build --stats",
+    "build": "react-scripts build --stats",
     "analyze": "webpack-bundle-analyzer build/bundle-stats.json",
     "cz": "git-cz",
     "release": "release-it",
