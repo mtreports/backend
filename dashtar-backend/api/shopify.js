@@ -5,7 +5,7 @@ const { SQLiteSessionStorage } = require("@shopify/shopify-app-session-storage-s
 
 
 const PORT = process.env.PORT || 5055;
-const DB_PATH = `${process.cwd()}/database.sqlite`;
+const DB_PATH = `${process.cwd()}/api/database.sqlite`;
 const shopify = shopifyApp({
   api: {
     apiKey: '8e265ab334a071389918ac8cd3e58164',
@@ -15,7 +15,7 @@ const shopify = shopifyApp({
     apiVersion: LATEST_API_VERSION,
     restResources,
     hostScheme: 'https',
-    hostName: `mtreports.mandasadevelopment.com:80`,
+    hostName: `https://mtreports.mandasadevelopment.com:80`,
   },
   auth: {
     path: '/api/auth',

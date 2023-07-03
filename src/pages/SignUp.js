@@ -1,4 +1,4 @@
-import React from "react";
+import { React, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Input, Label, Button } from "@windmill/react-ui";
 import { ImFacebook, ImGoogle } from "react-icons/im";
@@ -14,13 +14,23 @@ import ImageDark from "assets/img/create-account-office-dark.jpeg";
 import ThemeSuspense from "components/theme/Themeloading";
 
 
-const SignUp = async () => {
+const SignUp = () => {
   const {t}=useTranslation()
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
-      await AdminServices.getshopdetail().then((res)=>{
-        console.log(res);
-        ondefaultLogin({name:"shop_detail.name", email:"shop_detail.email",password:"shop_detail.password", role:"shop_detail.role" });
-      });
+
+  useEffect(() => {
+    // Side effect code here
+    console.log('Component mounted');
+
+    const getdatttaa = async () => {
+      const shop_detail =  await AdminServices.getshopdetail();
+      console.log(shop_detail);
+      ondefaultLogin({name:shop_detail.name, email:shop_detail.email,password:shop_detail.password, role:shop_detail.role, bulkop:shop_detail.bulkop })
+      }
+      getdatttaa();
+      
+  }, []); 
+
   return (
     <>
      <ThemeSuspense/>
