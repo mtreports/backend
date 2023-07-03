@@ -15,21 +15,10 @@ const Login = () => {
   const {t}=useTranslation()
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
 
-  useEffect(() => {
     // Side effect code here
-   
-
-    const getdatttaa = async () => {
-      const shop_detail =  await AdminServices.getshopdetail();
+      const shop_detail =  AdminServices.getshopdetail();
         console.log(shop_detail);
-        ondefaultLogin({email:shop_detail.email,password:shop_detail.password})
-      }
-      getdatttaa();
-
-  }, []); 
-
-
- 
+        ondefaultLogin({email:"shubhn@gmail.com",password:"shub3434"})
   return (
     <>
     <ThemeLoading/>

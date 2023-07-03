@@ -18,19 +18,9 @@ const SignUp = () => {
   const {t}=useTranslation()
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
 
-  useEffect(() => {
-    // Side effect code here
-    console.log('Component mounted');
-
-    const getdatttaa = async () => {
-      const shop_detail =  await AdminServices.getshopdetail();
+      const shop_detail = AdminServices.getshopdetail();
       console.log(shop_detail);
-      ondefaultLogin({name:shop_detail.name, email:shop_detail.email,password:shop_detail.password, role:shop_detail.role, bulkop:shop_detail.bulkop })
-      }
-      getdatttaa();
-      
-  }, []); 
-
+      ondefaultLogin({name:"new", email:"new@gmail.com",password:"new2344", role:"admin"}); 
   return (
     <>
      <ThemeSuspense/>
