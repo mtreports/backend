@@ -14,8 +14,3 @@ npm install
 pm2 start npm --name "backend" -- run dev
 pm2 serve /home/ec2-user/build 443 --spa
 echo Successfully connected
-
-
-
-
-

@@ -28,11 +28,9 @@ const App = () => {
           <Route path="/reset-password/:token" component={ResetPassword} />
 
           <PrivateRoute>
-          {' '}
-          <Route path="/" component={Layout} />
-          </PrivateRoute> 
-
-         
+            {' '}
+            <Route path="/" component={Layout} />
+          </PrivateRoute>
           <Redirect exact from="/" to="/login" />
         </Switch>
       </Router>
