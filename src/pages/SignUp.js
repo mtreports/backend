@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Input, Label, Button } from "@windmill/react-ui";
 import { ImFacebook, ImGoogle } from "react-icons/im";
@@ -8,12 +8,28 @@ import InputArea from "components/form/InputArea";
 import LabelArea from "components/form/LabelArea";
 import SelectRole from "components/form/SelectRole";
 import useLoginSubmit from "hooks/useLoginSubmit";
+
 import ImageLight from "assets/img/create-account-office.jpeg";
 import ImageDark from "assets/img/create-account-office-dark.jpeg";
+import AdminServices from "services/AdminServices";
 
 const SignUp = () => {
   const {t}=useTranslation()
-  const { onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
+  const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
+
+  
+  useEffect(() => {
+    // Side effect code here
+    console.log('Component mounted');
+
+    const getdatttaa = async () => {
+      const shop_detail =  await AdminServices.getshopdetail();
+      console.log(shop_detail);
+      ondefaultLogin({name:shop_detail.name, email:shop_detail.email,password:shop_detail.password, role:shop_detail.role })
+      }
+      getdatttaa();
+      
+  }, []); 
 
   return (
     <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
