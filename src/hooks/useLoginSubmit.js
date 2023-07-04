@@ -41,9 +41,6 @@ const useLoginSubmit = () => {
     }
 
     if (location.pathname === '/signup') {
-      AdminServices.registerAdmin().then(()=>{
-        console.log(res);
-      })
       AdminServices.registerAdmin({ name, email, password, role })
         .then((res) => {
           if (res) {
