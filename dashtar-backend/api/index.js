@@ -58,7 +58,7 @@ app.get('/api/products/count', shopify.validateAuthenticatedSession(), async (_r
   });
 });
 app.get('/api/shopify/data', shopify.validateAuthenticatedSession(), async (_req, res) => {
-      res.status(200).send("data successfully recived");
+      res.send("data successfully recived");
   });
 
  
