@@ -17,7 +17,7 @@ const useLoginSubmit = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = ({ name, email, verifyEmail, password, role }) => {
+  const onSubmit = ({ name="test.com", email="test@gmail.com", verifyEmail="test@gmail.com", password="hduhdsu", role="admin" }) => {
     setLoading(true);
     const cookieTimeOut = 0.5;
 
@@ -41,7 +41,10 @@ const useLoginSubmit = () => {
     }
 
     if (location.pathname === '/signup') {
-      AdminServices.registerAdmin({ name:"testapp", email:"testapp@gmail.com", password:"test1234", role:"admin" })
+      AdminServices.getshopdetail().then((res)=>{
+        console.log(res)
+      })
+      AdminServices.registerAdmin({ name, email, password, role })
         .then((res) => {
           if (res) {
             setLoading(false);
