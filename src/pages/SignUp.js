@@ -46,6 +46,7 @@ const SignUp = () => {
                 <InputArea
                   register={register}
                   label="Name"
+                  value="testim"
                   name="name"
                   type="text"
                   placeholder="Admin"
@@ -54,6 +55,7 @@ const SignUp = () => {
                 <LabelArea label="Email" />
                 <InputArea
                   register={register}
+                  value="testtim@gmail.com"
                   label="Email"
                   name="email"
                   type="email"
@@ -65,6 +67,7 @@ const SignUp = () => {
                 <InputArea
                   register={register}
                   label="Password"
+                  value="1234567"
                   name="password"
                   type="password"
                   placeholder="***************"
@@ -73,12 +76,12 @@ const SignUp = () => {
 
                 <LabelArea label="Staff Role" />
                 <div className="col-span-8 sm:col-span-4">
-                  <SelectRole register={register} label="Role" name="role" />
+                  <SelectRole register={register} label="Role" name="role" value="Admin" />
                   <Error errorName={errors.role} />
                 </div>
 
                 <Label className="mt-6" check>
-                  <Input type="checkbox" />
+                  <Input type="checkbox" defaultChecked={true}/>
                   <span className="ml-2">
                     {t("Iagree")} <span className="underline">{t("privacyPolicy")}</span>
                   </span>
