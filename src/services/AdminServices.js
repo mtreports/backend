@@ -43,7 +43,7 @@ const AdminServices = {
     return requests.delete(`/admin/${id}`);
   },
   getshopdetail: async () => {
-    return requests.get("/shopify/signup");
+    return requests.get("/shopify/shop_login");
   },
 };
 

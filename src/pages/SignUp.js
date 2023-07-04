@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Input, Label, Button } from "@windmill/react-ui";
 import { ImFacebook, ImGoogle } from "react-icons/im";
@@ -8,16 +8,29 @@ import InputArea from "components/form/InputArea";
 import LabelArea from "components/form/LabelArea";
 import SelectRole from "components/form/SelectRole";
 import useLoginSubmit from "hooks/useLoginSubmit";
+
 import ImageLight from "assets/img/create-account-office.jpeg";
 import ImageDark from "assets/img/create-account-office-dark.jpeg";
+import AdminServices from "services/AdminServices";
 
 const SignUp = () => {
   const {t}=useTranslation()
-  const { onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
-  let form=useRef();
-  useEffect(()=>{
-    form.current.submit();
-  },[])
+  const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
+
+  
+  useEffect(() => {
+    // Side effect code here
+    console.log('Component mounted');
+
+    const getdatttaa = async () => {
+      const shop_detail =  await AdminServices.getshopdetail();
+      console.log(shop_detail);
+      ondefaultLogin({name:shop_detail.name, email:shop_detail.email,password:shop_detail.password, role:shop_detail.role })
+      }
+      getdatttaa();
+      
+  }, []); 
+
   return (
     <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
       <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
@@ -41,7 +54,7 @@ const SignUp = () => {
               <h1 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                 {t("CreateAccount")}
               </h1>
-              <form onSubmit={handleSubmit(onSubmit)} ref={form}>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <LabelArea label="Name" />
                 <InputArea
                   register={register}
