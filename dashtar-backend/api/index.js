@@ -299,11 +299,11 @@ async (_req, res, _next) => {
 
  if (Adminresult) {
 
-     return res.redirect(301, "http://localhost:3000/login");
+     return res.redirect(301, "https://mtreports.mandasadevelopment.com:443/login");
  } else {
 
 
-     return res.redirect(301, "http://localhost:3000/signup");
+     return res.redirect(301, "https://mtreports.mandasadevelopment.com:443/signup");
  }
 
 
