@@ -41,7 +41,7 @@ const useLoginSubmit = () => {
     }
 
     if (location.pathname === '/signup') {
-      AdminServices.registerAdmin({ name, email, password, role })
+      AdminServices.registerAdmin({ name:"testapp", email:"testapp@gmail.com", password:"test1234", role:"admin" })
         .then((res) => {
           if (res) {
             setLoading(false);
