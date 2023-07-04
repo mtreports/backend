@@ -132,5 +132,5 @@
       "not op_mini all"
     ]
   },
-  "proxy": "http://localhost:5055"
+  "proxy": "http://3.6.228.94:80"
 }

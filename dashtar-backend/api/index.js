@@ -98,9 +98,6 @@ app.get('/api/shopify/products/count', async (_req, res) => {
 
   res.status(200).send(countData);
   });
-  app.get('/api/shopify/signup', shopify.validateAuthenticatedSession(), async (_req, res) => {
-      res.status(200).send({ name:"testapp", email:"testapp@gmail.com", password:"test1234", role:"admin" });
-  });
 
 app.get("/api/shopify/getproducts", async (req, res) => {
   const session = res.locals.shopify.session;
@@ -274,7 +271,7 @@ res.status(200).send(jsondata);
 
 });
   
-
+console.log("ddts");
 app.use("/*", 
 shopify.validateAuthenticatedSession(),
 async (_req, res, _next) => {
@@ -288,6 +285,8 @@ async (_req, res, _next) => {
    var name  = response.data[0].name;
    console.log(email + shop_url + name);
 
+   return false;
+   
    const db = await connectToMongoDB();
 
   // admin collection query
