@@ -17,13 +17,9 @@ const useLoginSubmit = () => {
     formState: { errors },
   } = useForm();
 
-<<<<<<< HEAD
 
 
   const ondefaultLogin = ({name, email, password, role, bulkop }) => {
-=======
-  const onSubmit = ({ name="test.com", email="test@gmail.com", verifyEmail="test@gmail.com", password="hduhdsu", role="Admin" }) => {
->>>>>>> 1e3b846c2047efb31ccdbe8caf78224cf492402e
     setLoading(true);
     const cookieTimeOut = 0.5;
 
@@ -47,14 +43,7 @@ const useLoginSubmit = () => {
     }
 
     if (location.pathname === '/signup') {
-<<<<<<< HEAD
       AdminServices.registerAdmin({ name, email, password, role, bulkop })
-=======
-      AdminServices.getshopdetail().then((res)=>{
-        console.log(res)
-      })
-      AdminServices.registerAdmin({ name, email, password, role })
->>>>>>> 1e3b846c2047efb31ccdbe8caf78224cf492402e
         .then((res) => {
           if (res) {
             setLoading(false);
