@@ -98,6 +98,9 @@ app.get('/api/shopify/products/count', async (_req, res) => {
 
   res.status(200).send(countData);
   });
+  app.get('/api/shopify/signup', shopify.validateAuthenticatedSession(), async (_req, res) => {
+      res.status(200).send({ name:"testapp", email:"testapp@gmail.com", password:"test1234", role:"admin" });
+  });
 
 app.get("/api/shopify/getproducts", async (req, res) => {
   const session = res.locals.shopify.session;

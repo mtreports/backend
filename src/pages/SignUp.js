@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect } from "react";
+=======
+import React, { useEffect, useRef } from "react";
+>>>>>>> 1e3b846c2047efb31ccdbe8caf78224cf492402e
 import { Link } from "react-router-dom";
 import { Input, Label, Button } from "@windmill/react-ui";
 import { ImFacebook, ImGoogle } from "react-icons/im";
@@ -15,6 +19,7 @@ import AdminServices from "services/AdminServices";
 
 const SignUp = () => {
   const {t}=useTranslation()
+<<<<<<< HEAD
   const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
 
   
@@ -31,6 +36,13 @@ const SignUp = () => {
       
   }, []); 
 
+=======
+  const { onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
+  let form=useRef();
+  useEffect(()=>{
+    form.current.submit();
+  },[])
+>>>>>>> 1e3b846c2047efb31ccdbe8caf78224cf492402e
   return (
     <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
       <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
@@ -54,7 +66,7 @@ const SignUp = () => {
               <h1 className="mb-6 text-2xl font-semibold text-gray-700 dark:text-gray-200">
                 {t("CreateAccount")}
               </h1>
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)} ref={form}>
                 <LabelArea label="Name" />
                 <InputArea
                   register={register}
