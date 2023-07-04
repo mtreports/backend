@@ -9,11 +9,15 @@ import InputArea from "components/form/InputArea";
 import ImageLight from "assets/img/login-office.jpeg";
 import ImageDark from "assets/img/login-office-dark.jpeg";
 import useLoginSubmit from "../hooks/useLoginSubmit";
+import AdminServices from "services/AdminServices";
+import { log } from "console";
 
 const Login = () => {
   const {t}=useTranslation()
   const { onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
-
+    AdminServices.logindata().then((res)=>{
+      console.log(res);
+    })
   return (
     <>
       <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">

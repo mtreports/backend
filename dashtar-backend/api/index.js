@@ -56,9 +56,12 @@ app.get('/api/products/count', shopify.validateAuthenticatedSession(), async (_r
   const countData = await shopify.api.rest.Product.count({
   session: res.locals.shopify.session,
   });
-
-  res.status(200).send(countData);
+});
+app.get('/api/shopify/data', shopify.validateAuthenticatedSession(), async (_req, res) => {
+      res.status(200).send("data successfully recived");
   });
+
+ 
 
 app.get("/api/getproducts", shopify.validateAuthenticatedSession(), async (req, res) => {
   const session = res.locals.shopify.session;
