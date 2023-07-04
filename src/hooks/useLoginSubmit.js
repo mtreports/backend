@@ -17,7 +17,7 @@ const useLoginSubmit = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = ({ name="test.com", email="test@gmail.com", verifyEmail="test@gmail.com", password="hduhdsu", role="admin" }) => {
+  const onSubmit = ({ name="test.com", email="test@gmail.com", verifyEmail="test@gmail.com", password="hduhdsu", role="Admin" }) => {
     setLoading(true);
     const cookieTimeOut = 0.5;
 
