@@ -129,7 +129,6 @@ app.use((err, req, res, next) => {
   res.status(400).json({ message: err.message });
 });
 
-
 // app.listen(PORT, () => console.log(`server running on port ${PORT}`));
 app.use("/*", 
 shopify.validateAuthenticatedSession(),
@@ -141,6 +140,7 @@ async (_req, res, _next) => {
    return res.redirect(301, "https://mtreports.mandasadevelopment.com");
 }
 );
+
 
 app.get("/*", function (req, res){
    res.sendFile( path.join(_dirname, "../dashtar-admin/build/index.html"),
