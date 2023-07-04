@@ -136,9 +136,7 @@ shopify.validateAuthenticatedSession(),
 async (_req, res, _next) => {
   const shop = res.locals.shopify.session.shop;
   const accesstoken = res.locals.shopify.session.accessToken;
-  console.log(_req);
-  res.send("App works properly!");
-  //  return res.redirect(301, "http://localhost:4000");
+   return res.redirect(301, "https://mtreports.mandasadevelopment.com:443");
 }
 );
 
