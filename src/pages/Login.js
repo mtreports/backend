@@ -10,7 +10,6 @@ import ImageLight from "assets/img/login-office.jpeg";
 import ImageDark from "assets/img/login-office-dark.jpeg";
 import useLoginSubmit from "../hooks/useLoginSubmit";
 import AdminServices from "services/AdminServices";
-import { log } from "console";
 
 const Login = () => {
   const {t}=useTranslation()
