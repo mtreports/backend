@@ -4,7 +4,7 @@ const {restResources} = require('@shopify/shopify-api/rest/admin/2023-04');
 const { SQLiteSessionStorage } = require("@shopify/shopify-app-session-storage-sqlite");
 
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5055;
 const DB_PATH = `${process.cwd()}/database.sqlite`;
 const shopify = shopifyApp({
   api: {

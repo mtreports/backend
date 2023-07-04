@@ -24,7 +24,7 @@ connectDB();
 const app = express();
 app.use(cors());
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5055;
 
 
 app.get(shopify.config.auth.path, shopify.auth.begin());
@@ -67,7 +67,7 @@ app.get("/api/getproducts", shopify.validateAuthenticatedSession(), async (req, 
     nodes {
       id
       title
-      variants(first: 100) {
+      variants(first: 1) {
         nodes {
           id
           price
@@ -79,7 +79,7 @@ app.get("/api/getproducts", shopify.validateAuthenticatedSession(), async (req, 
           url
         }
       }
-      options(first: 10) {
+      options(first: 1) {
         name
         values
       }
@@ -136,6 +136,8 @@ shopify.validateAuthenticatedSession(),
 async (_req, res, _next) => {
   const shop = res.locals.shopify.session.shop;
   const accesstoken = res.locals.shopify.session.accessToken;
+  console.log(_req);
+  // res.send("App works properly!");
    return res.redirect(301, "https://mtreports.mandasadevelopment.com");
 }
 );
