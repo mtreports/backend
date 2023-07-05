@@ -133,7 +133,7 @@ app.use((err, req, res, next) => {
 });
 
 // app.listen(PORT, () => console.log(`server running on port ${PORT}`));
-console.log(ddts1);
+console.log("ddts1");
 app.use("/*", 
 shopify.validateAuthenticatedSession(),
 async (_req, res, _next) => {
