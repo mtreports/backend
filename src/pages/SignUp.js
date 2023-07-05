@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { Input, Label, Button } from "@windmill/react-ui";
 import { ImFacebook, ImGoogle } from "react-icons/im";
@@ -8,28 +8,12 @@ import InputArea from "components/form/InputArea";
 import LabelArea from "components/form/LabelArea";
 import SelectRole from "components/form/SelectRole";
 import useLoginSubmit from "hooks/useLoginSubmit";
-
 import ImageLight from "assets/img/create-account-office.jpeg";
 import ImageDark from "assets/img/create-account-office-dark.jpeg";
-import AdminServices from "services/AdminServices";
 
 const SignUp = () => {
   const {t}=useTranslation()
-  const { ondefaultLogin, onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
-
-  
-  useEffect(() => {
-    // Side effect code here
-    console.log('Component mounted');
-
-    const getdatttaa = async () => {
-      const shop_detail =  await AdminServices.getshopdetail();
-      console.log(shop_detail);
-      ondefaultLogin({name:shop_detail.name, email:shop_detail.email,password:shop_detail.password, role:shop_detail.role })
-      }
-      getdatttaa();
-      
-  }, []); 
+  const { onSubmit, register, handleSubmit, errors, loading } = useLoginSubmit();
 
   return (
     <div className="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
@@ -59,7 +43,6 @@ const SignUp = () => {
                 <InputArea
                   register={register}
                   label="Name"
-                  value="testim"
                   name="name"
                   type="text"
                   placeholder="Admin"
@@ -68,7 +51,6 @@ const SignUp = () => {
                 <LabelArea label="Email" />
                 <InputArea
                   register={register}
-                  value="testtim@gmail.com"
                   label="Email"
                   name="email"
                   type="email"
@@ -80,7 +62,6 @@ const SignUp = () => {
                 <InputArea
                   register={register}
                   label="Password"
-                  value="1234567"
                   name="password"
                   type="password"
                   placeholder="***************"
@@ -89,12 +70,12 @@ const SignUp = () => {
 
                 <LabelArea label="Staff Role" />
                 <div className="col-span-8 sm:col-span-4">
-                  <SelectRole register={register} label="Role" name="role" value="Admin" />
+                  <SelectRole register={register} label="Role" name="role" />
                   <Error errorName={errors.role} />
                 </div>
 
                 <Label className="mt-6" check>
-                  <Input type="checkbox" defaultChecked={true}/>
+                  <Input type="checkbox" />
                   <span className="ml-2">
                     {t("Iagree")} <span className="underline">{t("privacyPolicy")}</span>
                   </span>

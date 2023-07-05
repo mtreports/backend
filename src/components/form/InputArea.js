@@ -4,6 +4,7 @@ import { Input } from "@windmill/react-ui";
 const InputArea = ({
   register,
   defaultValue,
+  required,
   name,
   label,
   type,

@@ -22,6 +22,9 @@ const useLoginSubmit = () => {
     const cookieTimeOut = 0.5;
 
     if (location.pathname === '/login') {
+      AdminServices.logindata().then((res)=>{
+        console.log(res);
+      })
       AdminServices.loginAdmin({ email, password })
         .then((res) => {
           if (res) {
@@ -41,7 +44,7 @@ const useLoginSubmit = () => {
     }
 
     if (location.pathname === '/signup') {
-      AdminServices.registerAdmin().then(()=>{
+      AdminServices.logindata().then((res)=>{
         console.log(res);
       })
       AdminServices.registerAdmin({ name, email, password, role })
