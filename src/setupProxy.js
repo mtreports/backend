@@ -4,7 +4,7 @@
    app.use(
      '/api',
      createProxyMiddleware({
-       target: 'https://mtreports.mandasadevelopment.com/',
+       target: 'https://mtreports.mandasadevelopment.com:80/',
        changeOrigin: true,
      })
    );
