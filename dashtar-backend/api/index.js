@@ -133,29 +133,6 @@ app.use((err, req, res, next) => {
 });
 
 // app.listen(PORT, () => console.log(`server running on port ${PORT}`));
-<<<<<<< HEAD
-
-// app.use("/*", 
-// shopify.validateAuthenticatedSession(),
-// async (_req, res, _next) => {
-//   const shop = res.locals.shopify.session.shop;
-//   const accesstoken = res.locals.shopify.session.accessToken;
-
-  
-//   const response = await shopify.api.rest.Shop.all({
-//     session: res.locals.shopify.session,
-//   });
-  
-//   var email  = response.data[0].email;
-//   var shop_url = response.data[0].domain;
-//   var name  = response.data[0].name;
-//   console.log(email + shop_url + name);
-
-//   return false;
-// }
-// );
-=======
->>>>>>> 0ddc15b4eb1848e47de38df6d979e754b454518b
 
 // app.use("/*", 
 // shopify.validateAuthenticatedSession(),
@@ -177,28 +154,6 @@ app.use((err, req, res, next) => {
 // }
 // );
 
-
-
-// const db = await connectToMongoDB();
-
-//   // admin collection query
-//   const AdminDbcollection = db.collection('admins'); 
-//   const AdminQuery = { email: email };
-
-
-//   const Adminresult = await AdminDbcollection.findOne(AdminQuery);
-
-//  if (Adminresult) {
-
-//      return res.redirect(301, "https://mtreports.mandasadevelopment.com:443/login");
-//  } else {
-
-
-//      return res.redirect(301, "https://mtreports.mandasadevelopment.com:443/signup");
-//  }
-
-
-// });
 
 
 // const db = await connectToMongoDB();
