@@ -286,24 +286,24 @@ async (_req, res, _next) => {
    console.log(email + shop_url + name);
 
    return false;
-   
-   const db = await connectToMongoDB();
 
-  // admin collection query
-  const AdminDbcollection = db.collection('admins'); 
-  const AdminQuery = { email: email };
+// const db = await connectToMongoDB();
 
-
-  const Adminresult = await AdminDbcollection.findOne(AdminQuery);
-
- if (Adminresult) {
-
-     return res.redirect(301, "https://mtreports.mandasadevelopment.com:443/login");
- } else {
+//   // admin collection query
+//   const AdminDbcollection = db.collection('admins'); 
+//   const AdminQuery = { email: email };
 
 
-     return res.redirect(301, "https://mtreports.mandasadevelopment.com:443/signup");
- }
+//   const Adminresult = await AdminDbcollection.findOne(AdminQuery);
+
+//  if (Adminresult) {
+
+//      return res.redirect(301, "https://mtreports.mandasadevelopment.com:443/login");
+//  } else {
+
+
+//      return res.redirect(301, "https://mtreports.mandasadevelopment.com:443/signup");
+//  }
 
 
 });
