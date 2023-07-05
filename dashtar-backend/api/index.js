@@ -51,7 +51,7 @@ app.use(helmet());
 // app.use("/api/*", shopify.validateAuthenticatedSession());
 
 
-app.get('/api/products/count', shopify.validateAuthenticatedSession(), async (_req, res) => {
+app.get('/api/shopify/products/count', shopify.validateAuthenticatedSession(), async (_req, res) => {
 //  console.log(res.locals.shopify.session);
   const countData = await shopify.api.rest.Product.count({
   session: res.locals.shopify.session,
@@ -133,23 +133,55 @@ app.use((err, req, res, next) => {
 });
 
 // app.listen(PORT, () => console.log(`server running on port ${PORT}`));
-app.use("/*", 
-shopify.validateAuthenticatedSession(),
-async (_req, res, _next) => {
-  const shop = res.locals.shopify.session.shop;
-  const accesstoken = res.locals.shopify.session.accessToken;
-  console.log(_req);
-  // res.send("App works properly!");
-   return res.redirect(301, "https://mtreports.mandasadevelopment.com");
-}
-);
+
+// app.use("/*", 
+// shopify.validateAuthenticatedSession(),
+// async (_req, res, _next) => {
+//   const shop = res.locals.shopify.session.shop;
+//   const accesstoken = res.locals.shopify.session.accessToken;
+
+  
+//   const response = await shopify.api.rest.Shop.all({
+//     session: res.locals.shopify.session,
+//   });
+  
+//   var email  = response.data[0].email;
+//   var shop_url = response.data[0].domain;
+//   var name  = response.data[0].name;
+//   console.log(email + shop_url + name);
+
+//   return false;
+// }
+// );
 
 
-app.get("/*", function (req, res){
-   res.sendFile( path.join(_dirname, "../dashtar-admin/build/index.html"),
-    function (err) { 
-      if (err) { res.status (500).send(err); } }
-       );
-       });
+
+// const db = await connectToMongoDB();
+
+//   // admin collection query
+//   const AdminDbcollection = db.collection('admins'); 
+//   const AdminQuery = { email: email };
+
+
+//   const Adminresult = await AdminDbcollection.findOne(AdminQuery);
+
+//  if (Adminresult) {
+
+//      return res.redirect(301, "https://mtreports.mandasadevelopment.com:443/login");
+//  } else {
+
+
+//      return res.redirect(301, "https://mtreports.mandasadevelopment.com:443/signup");
+//  }
+
+
+// });
+
+// app.get("/*", function (req, res){
+//    res.sendFile( path.join(_dirname, "../dashtar-admin/build/index.html"),
+//     function (err) { 
+//       if (err) { res.status (500).send(err); } }
+//        );
+//        });
 
 app.listen(PORT, () => console.log(`server running on port ${PORT}`));
