@@ -13,4 +13,3 @@ cd /home/ec2-user/dashtar-backend
 npm install
 pm2 serve /home/ec2-user/build 443 --spa
 npm run dev
-pm2 logs
