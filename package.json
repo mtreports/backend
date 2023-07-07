@@ -1,72 +1,136 @@
 {
-  "homepage": "https://horizon-ui.com/horizon-ui-chakra",
-  "name": "horizon-ui-chakra",
-  "version": "1.0.1",
+  "name": "dashtar-admin",
+  "version": "0.1.0",
+  "description": "this is Dashtar-admin built with react.js and tailwindcss",
   "private": true,
   "dependencies": {
-    "@chakra-ui/icons": "^1.1.5",
-    "@chakra-ui/react": "1.8.8",
-    "@chakra-ui/system": "^1.12.1",
-    "@chakra-ui/theme-tools": "^1.3.6",
-    "@emotion/cache": "^11.7.1",
-    "@emotion/react": "^11.4.1",
-    "@emotion/styled": "^11.3.0",
-    "@hypertheme-editor/chakra-ui": "^0.1.5",
+    "@cloudinary/react": "^1.11.2",
+    "@cloudinary/url-gen": "^1.9.2",
+    "@headlessui/react": "^1.4.1",
+    "@pathofdev/react-tag-input": "^1.0.7",
+    "@react-pdf/font": "2.2.0",
+    "@react-pdf/renderer": "2.1.0",
+    "@shopify/shopify-api": "^7.3.0",
+    "@shopify/shopify-app-express": "^2.1.2",
+    "@shopify/shopify-app-session-storage-sqlite": "^1.2.2",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
-    "apexcharts": "3.35.2",
-    "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-register": "^6.26.0",
-    "framer-motion": "^4.1.17",
-    "react": "17.0.2",
-    "react-apexcharts": "1.4.0",
-    "react-calendar": "^3.7.0",
-    "react-custom-scrollbars-2": "^4.2.1",
-    "react-dom": "17.0.2",
-    "react-dropzone": "^12.0.4",
+    "@types/draft-js": "^0.11.9",
+    "@windmill/react-ui": "^0.5.1",
+    "ajv": "^8.11.2",
+    "aws-sdk": "^2.1395.0",
+    "axios": "^0.24.0",
+    "babel-jest": "^26.6.0",
+    "chart.js": "^3.7.1",
+    "classnames": "2.2.6",
+    "cloudinary": "^1.35.0",
+    "combinate": "^1.1.11",
+    "csvtojson": "^2.0.10",
+    "dayjs": "^1.10.7",
+    "dotenv": "^16.0.1",
+    "draft-js": "^0.11.7",
+    "export-from-json": "^1.7.0",
+    "http-proxy-middleware": "^2.0.6",
+    "i18next": "^21.8.5",
+    "i18next-browser-languagedetector": "^6.1.4",
+    "immutability-helper": "^3.1.1",
+    "js-cookie": "^3.0.1",
+    "mock-aws-s3": "^4.0.2",
+    "multiselect-react-dropdown": "^2.0.21",
+    "nodemon": "^2.0.22",
+    "rc-drawer": "^4.4.2",
+    "rc-tree": "^5.6.5",
+    "react": "^17.0.2",
+    "react-beforeunload": "^2.5.3",
+    "react-chartjs-2": "^3.3.0",
+    "react-custom-scrollbars-2": "^4.4.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
+    "react-dom": "^17.0.2",
+    "react-draft-wysiwyg": "^1.15.0",
+    "react-dropzone": "^11.4.2",
+    "react-flags-select": "^2.2.3",
+    "react-google-login": "^5.2.2",
+    "react-helmet": "^6.1.0",
+    "react-hook-form": "^7.18.0",
+    "react-i18next": "^11.16.9",
     "react-icons": "^4.3.1",
-    "react-is": "^18.0.0",
+    "react-loading-skeleton": "^3.2.0",
+    "react-multi-select-component": "^4.2.3",
+    "react-redux": "^8.0.2",
+    "react-responsive-modal": "^6.2.0",
     "react-router-dom": "^5.3.0",
-    "react-scripts": "5.0.0",
-    "react-table": "^7.7.0",
-    "stylis": "^4.1.1",
-    "stylis-plugin-rtl": "2.0.2",
-    "web-vitals": "^1.1.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "sitemap": "babel-node ./sitemap-builder.js"
+    "react-search-autocomplete": "^6.1.2",
+    "react-simple-keyboard": "^3.4.197",
+    "react-spinners": "^0.11.0",
+    "react-switch": "^7.0.0",
+    "react-tabs": "^4.2.1",
+    "react-tag-input-component": "^1.1.1",
+    "react-to-print": "^2.14.7",
+    "react-toastify": "^8.0.3",
+    "react-tooltip": "^4.2.21",
+    "react-transition-group": "^4.4.2",
+    "react-use-cart": "^1.13.0",
+    "redux": "^4.2.0",
+    "redux-thunk": "^2.4.1",
+    "socket.io-client": "^4.5.3",
+    "sweetalert": "^2.1.2",
+    "web-vitals": "^1.1.2",
+    "xlsx": "^0.18.5"
   },
   "resolutions": {
-    "react-error-overlay": "6.0.9"
+    "@react-pdf/font": "2.2.0",
+    "react-scripts/**/react-error-overlay": "6.0.9"
+  },
+  "scripts": {
+    "tailwind:dev": "tailwindcss build src/assets/css/tailwind.css -o src/assets/css/tailwind.output.css",
+    "tailwind:build": "cross-env NODE_ENV=production postcss src/assets/css/tailwind.css -o src/assets/css/tailwind.output.css",
+    "prestart": "npm run tailwind:dev",
+    "start": "react-scripts start",
+    "prebuild": "npm run tailwind:build",
+    "build": "react-scripts build --stats",
+    "analyze": "webpack-bundle-analyzer build/bundle-stats.json",
+    "cz": "git-cz",
+    "release": "release-it",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.8.8",
+    "cross-env": "7.0.2",
+    "cssnano": "4.1.10",
+    "postcss-cli": "7.1.1",
+    "react-error-overlay": "6.0.9",
+    "react-scripts": "^4.0.3",
+    "release-it": "13.6.4",
+    "tailwindcss": "^1.9.6",
+    "webpack-bundle-analyzer": "^4.8.0"
+  },
+  "release-it": {
+    "github": {
+      "release": true
+    },
+    "npm": {
+      "publish": false
+    }
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": "react-app"
   },
   "browserslist": {
     "production": [
-      ">0.2%",
+      ">0.3%",
+      "not ie 11",
       "not dead",
       "not op_mini all"
     ],
     "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+      ">0.3%",
+      "not ie 11",
+      "not dead",
+      "not op_mini all"
     ]
   },
-  "devDependencies": {
-    "gh-pages": "^3.2.3"
-  }
+  "proxy": "https://mtreports.mandasadevelopment.com:80"
 }
