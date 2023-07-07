@@ -3,8 +3,6 @@ os: linux
 files:
   - source: build
     destination: /home/ec2-user/build
-  - source: dashtar-backend
-    destination: /home/ec2-user/dashtar-backend
 hooks:
   BeforeInstall:
     - location: scripts/install_dependencies

@@ -1,41 +1,25 @@
-import React, { lazy } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
-import { ToastContainer } from './utils/toast';
-import AccessibleNavigationAnnouncer from './components/AccessibleNavigationAnnouncer';
-import PrivateRoute from './components/login/PrivateRoute';
+import { BrowserRouter } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
+// routes
+import Router from './routes';
+// theme
+import ThemeProvider from './theme';
+// components
+import { StyledChart } from './components/chart';
+import ScrollToTop from './components/scroll-to-top';
 
-const Layout = lazy(() => import('./layout/Layout'));
-const Login = lazy(() => import('./pages/Login'));
-const SignUp = lazy(() => import('./pages/SignUp'));
-const ForgetPassword = lazy(() => import('./pages/ForgotPassword'));
-const ResetPassword = lazy(() => import('./pages/ResetPassword'));
+// ----------------------------------------------------------------------
 
-const App = () => {
+export default function App() {
   return (
-    <>
-      <ToastContainer />
-      <Router>
-        <AccessibleNavigationAnnouncer />
-        <Switch>
-          <Route path="/login" component={Login} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/forgot-password" component={ForgetPassword} />
-          <Route path="/reset-password/:token" component={ResetPassword} />
-
-          <PrivateRoute>
-            {' '}
-            <Route path="/" component={Layout} />
-          </PrivateRoute>
-          <Redirect exact from="/" to="/login" />
-        </Switch>
-      </Router>
-    </>
+    <HelmetProvider>
+      <BrowserRouter>
+        <ThemeProvider>
+          <ScrollToTop />
+          <StyledChart />
+          <Router />
+        </ThemeProvider>
+      </BrowserRouter>
+    </HelmetProvider>
   );
-};
-
-export default App;
+}
